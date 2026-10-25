@@ -66,11 +66,18 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .slug{font:700 .82rem/1.35 var(--script);text-transform:uppercase;letter-spacing:.02em;display:flex;gap:10px;justify-content:space-between;align-items:flex-start}
 .slug .loc{flex:1}
 .slug .loc em{font-style:normal;color:var(--muted);font-weight:400}
-.label{font:600 .76rem var(--ui);background:var(--c);color:#fff;border-radius:999px;padding:3px 10px;white-space:nowrap;text-transform:none;letter-spacing:0}
-.dialogue{max-width:30ch;margin:18px auto 4px;font:400 1.08rem/1.55 var(--script)}
-.char{display:block;text-align:center;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
-.paren{display:block;text-align:center;color:var(--muted);font-style:italic;margin-bottom:4px;font-size:.95rem}
+.label{max-width:46%;overflow:hidden;text-overflow:ellipsis;font:600 .76rem var(--ui);background:var(--c);color:#fff;border-radius:999px;padding:3px 10px;white-space:nowrap;text-transform:none;letter-spacing:0}
+.dialogue{margin:16px 0 4px;font:400 1rem/1.6 var(--script);position:relative}
+.dialogue.short{max-width:32ch;margin-left:auto;margin-right:auto;font-size:1.08rem}
+.char{display:block;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+.short .char,.short .paren{text-align:center}
+.paren{display:block;color:var(--muted);font-style:italic;margin-bottom:6px;font-size:.92rem}
 .line{display:block;text-wrap:pretty;white-space:pre-line}
+.turn{display:grid;gap:1px;padding:8px 0 8px 12px;border-left:2px solid var(--chip)}
+.turn + .turn{margin-top:4px}
+.turn .who{font:700 .74rem var(--script);text-transform:uppercase;letter-spacing:.06em;color:var(--c)}
+.clamp{max-height:11.5em;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 70%,transparent);mask-image:linear-gradient(180deg,#000 70%,transparent)}
+.more{border:0;background:none;color:var(--ink);font:700 .85rem var(--ui);padding:6px 0 0;display:inline-flex;gap:4px;align-items:center;text-decoration:underline;text-underline-offset:3px}
 .missing{display:block;margin:16px 0 4px;border:1.5px dashed var(--line);border-radius:12px;padding:14px;text-align:center;color:var(--muted);font:400 .98rem var(--script);width:100%;background:none}
 .missing strong{color:var(--accent);font-weight:700}
 .foot{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:10px;border-top:1px dashed var(--line)}
@@ -81,7 +88,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .mini svg{width:16px;height:16px}
 
 /* feature: tonight's screening */
-.feature .dialogue{font-size:1.22rem;max-width:28ch}
+.feature .dialogue.short{font-size:1.2rem;max-width:28ch}
 .feature .show{font:800 1.05rem var(--ui);letter-spacing:-0.01em;text-transform:none}
 
 /* posters */
@@ -89,6 +96,9 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .poster{position:relative;aspect-ratio:2/3;border:0;border-radius:14px;padding:14px;text-align:left;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--g)}
 .poster::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.45)),repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
 .poster .n{position:absolute;top:10px;right:12px;font:700 .8rem var(--script);background:rgba(0,0,0,.28);padding:3px 8px;border-radius:999px}
+.poster .prog{position:absolute;left:14px;right:14px;bottom:8px;height:3px;border-radius:2px;background:rgba(255,255,255,.25);overflow:hidden}
+.poster .prog i{display:block;height:100%;background:#fff;border-radius:2px}
+.poster .m{margin-bottom:6px}
 .poster .t{position:relative;font:800 1.6rem/0.95 var(--ui);letter-spacing:-0.04em;text-wrap:balance}
 .poster .m{position:relative;font-size:.8rem;opacity:.85;margin-top:6px}
 .poster.add{background:none;border:2px dashed var(--line);color:var(--muted);align-items:center;justify-content:center;text-align:center;font-weight:600}
@@ -115,6 +125,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .cells{display:flex;flex-wrap:wrap;gap:4px}
 .cell{width:30px;height:30px;border-radius:8px;border:0;background:var(--chip);color:var(--muted);font:400 .72rem var(--script);padding:0}
 .cell.on{background:var(--c);color:#fff;font-weight:700}
+.cell.on.part{background:color-mix(in srgb,var(--c) 26%,var(--paper));color:var(--ink);font-weight:600}
 .cell.sel{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink);font-weight:700}
 .legend{display:flex;gap:14px;font-size:.78rem;color:var(--muted);margin:10px 0 0;flex-wrap:wrap}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
@@ -240,8 +251,9 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
 <script>
 (() => {
   const $ = s => document.querySelector(s);
-  const APP_VERSION = '1.2';
+  const APP_VERSION = '1.3';
   const CHANGELOG = [
+    ['1.3', 'Frases largas y diálogos entre personajes más legibles, mapa con episodios tenues hasta tener frase y contador de frases en la cartelera.'],
     ['1.2', 'Versiones visibles: cada frase guardada sube el último número (1.2.1, 1.2.2…).'],
     ['1.1', 'Rediseño: escenas en formato guion, pendientes, selector de episodios con botones y compartir.'],
     ['1.0', 'Primera versión en GitHub: escenas, mapa de episodios y guardado con commits.']
@@ -397,7 +409,8 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
         const cs = clipsOf(s.name);
         const b = document.createElement('button'); b.type = 'button'; b.className = 'poster'; b.style.setProperty('--g', grad(s.name));
         const meta = s.kind === 'pelicula' ? 'Película' : s.seasons ? plural(s.seasons.length,'temporada','temporadas') : 'Serie';
-        b.innerHTML = `<span class="n">${cs.length}</span><span class="t">${esc(s.name)}</span><span class="m">${meta}${s.platform ? ', ' + esc(s.platform) : ''}</span>`;
+        const fr = cs.filter(x => x.quote).length;
+        b.innerHTML = `<span class="n">${fr}/${cs.length} frases</span><span class="prog"><i style="width:${cs.length ? fr/cs.length*100 : 0}%"></i></span><span class="t">${esc(s.name)}</span><span class="m">${meta}${s.platform ? ', ' + esc(s.platform) : ''}</span>`;
         b.onclick = () => openSeries(s.name);
         grid.appendChild(b);
       });
@@ -435,15 +448,15 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
     const mapBox = $('#mapBox');
     if (s.kind !== 'pelicula') {
       if (s.seasons) {
-        const has = {}; cs.forEach(x => { const k = `${x.season}-${x.episode}`; has[k] = (has[k]||0)+1; });
+        const has = {}, open = {}; cs.forEach(x => { const k = `${x.season}-${x.episode}`; has[k] = (has[k]||0)+1; if (!x.quote) open[k] = true; });
         let html = `<div class="h">Mapa de episodios</div><div class="map" style="--c:${c}">`;
         s.seasons.forEach((n,i) => {
           const sn = i+1; html += `<div class="srow"><b>T${sn}</b><div class="cells">`;
-          for (let e=1;e<=n;e++) { const on = has[`${sn}-${e}`]; const sel = S.sel && S.sel.season===sn && S.sel.episode===e;
-            html += `<button type="button" class="cell${on?' on':''}${sel?' sel':''}" data-s="${sn}" data-e="${e}" aria-label="Temporada ${sn}, episodio ${e}${on?`, ${on} escena${on>1?'s':''}`:''}">${e}</button>`; }
+          for (let e=1;e<=n;e++) { const on = has[`${sn}-${e}`], part = open[`${sn}-${e}`]; const sel = S.sel && S.sel.season===sn && S.sel.episode===e;
+            html += `<button type="button" class="cell${on?' on':''}${part?' part':''}${sel?' sel':''}" data-s="${sn}" data-e="${e}" aria-label="Temporada ${sn}, episodio ${e}${on?`, ${on} escena${on>1?'s':''}${part?', falta frase':''}`:''}">${e}</button>`; }
           html += '</div></div>';
         });
-        html += `<div class="legend"><span><i style="background:${c}"></i>Con escena: toca para verla</span><span><i style="box-shadow:inset 0 0 0 2px var(--ink)"></i>Marcado para agregar</span></div></div>`;
+        html += `<div class="legend"><span><i style="background:${c}"></i>Con frase</span><span><i style="background:color-mix(in srgb,${c} 26%,var(--paper))"></i>Falta la frase</span><span><i style="box-shadow:inset 0 0 0 2px var(--ink)"></i>Marcado para agregar</span></div></div>`;
         mapBox.innerHTML = html;
         mapBox.querySelectorAll('.cell').forEach(b => b.onclick = () => {
           const sn = +b.dataset.s, e = +b.dataset.e;
@@ -481,11 +494,13 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
     if (!showName && x.kind !== 'pelicula' && !document.getElementById(`ep-${x.season}-${x.episode}`)) el.id = `ep-${x.season}-${x.episode}`;
     el.innerHTML = `
       <div class="slug"><span class="loc">${showName ? `<span class="show">${esc(x.show)}</span><br>` : ''}${where}${x.episodeTitle ? ` <em>“${esc(x.episodeTitle)}”</em>` : ''}${where || x.episodeTitle ? ' — ' : ''}${esc(x.start)}</span>${x.label ? `<span class="label">${esc(x.label)}</span>` : ''}</div>
-      ${x.quote ? `<div class="dialogue">${x.character ? `<span class="char">${esc(x.character)}</span>` : ''}${x.note ? `<span class="paren">(${esc(x.note)})</span>` : ''}<span class="line">${esc(x.quote)}</span></div>`
+      ${x.quote ? dialogue(x)
         : `<button type="button" class="missing" data-act="write"><strong>Falta la frase.</strong><br>Pausa en ${esc(x.start)} y toca aquí para escribirla.</button>${x.note ? `<p class="paren">(${esc(x.note)})</p>` : ''}`}
       <div class="foot"><span class="tc">${esc(x.start)}${x.end ? '–' + esc(x.end) : ''}${dur ? ` (${dur})` : ''}</span><span class="bar" aria-hidden="true"><i style="left:${left}%;width:${width}%"></i></span>
         ${x.quote ? `<button type="button" class="mini" data-act="share" aria-label="Compartir frase">${ICON.share}</button>` : ''}
         <button type="button" class="mini" data-act="edit" aria-label="Editar escena">${ICON.edit}</button></div>`;
+    const more = el.querySelector('.more');
+    if (more) more.onclick = () => { const d = el.querySelector('.dialogue'); const open = d.classList.toggle('clamp') === false; more.textContent = open ? 'Ver menos' : 'Ver completa'; more.setAttribute('aria-expanded', String(open)); };
     el.querySelectorAll('[data-act]').forEach(b => b.onclick = () => {
       if (b.dataset.act === 'share') return shareClip(x);
       openClipForm(x.show, x, null, b.dataset.act === 'write' ? 'quote' : null);
@@ -493,6 +508,26 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
     return el;
   }
 
+  function turnsOf(q) {
+    const turns = []; let conv = false;
+    q.split('\n').forEach(raw => {
+      const m = raw.match(/^\s*([^:\n]{1,24}?)\s*:\s*(.*)$/);
+      if (m && !/^\d+$/.test(m[1])) { conv = true; turns.push({ who: m[1], text: m[2] }); }
+      else if (turns.length) turns[turns.length-1].text += (turns[turns.length-1].text ? '\n' : '') + raw;
+      else turns.push({ who: '', text: raw });
+    });
+    return conv ? turns.filter(t => t.who || t.text.trim()) : null;
+  }
+  function dialogue(x) {
+    const q = x.quote, turns = turnsOf(q);
+    const long = q.length > 260 || q.split('\n').length > 6;
+    const short = !turns && q.length <= 160;
+    const paren = x.note ? `<span class="paren">(${esc(x.note)})</span>` : '';
+    let inner;
+    if (turns) inner = paren + turns.map(t => `<div class="turn">${t.who ? `<span class="who">${esc(t.who)}</span>` : ''}<span class="line">${esc(t.text.trim())}</span></div>`).join('');
+    else inner = `${x.character ? `<span class="char">${esc(x.character)}</span>` : ''}${paren}<span class="line">${esc(q)}</span>`;
+    return `<div class="dialogue${short ? ' short' : ''}${long ? ' clamp' : ''}">${inner}</div>${long ? '<button type="button" class="more" aria-expanded="false">Ver completa</button>' : ''}`;
+  }
   async function shareClip(x) {
     const text = `“${x.quote}”${x.character ? `\n— ${x.character}` : ''}\n${x.show}${x.kind==='pelicula' ? '' : ` T${x.season}E${x.episode}`}, ${x.start}`;
     try { if (navigator.share) { await navigator.share({ text }); return; } } catch (e) { if (e.name === 'AbortError') return; }
