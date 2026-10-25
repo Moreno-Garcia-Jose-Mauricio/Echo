@@ -103,13 +103,14 @@
       "platform": "Netflix",
       "season": 7,
       "episode": 13,
-      "episodeTitle": "Inevitable",
       "start": "24:48",
       "end": "26:05",
+      "character": "Mike y Rachel",
+      "quote": "Rachel: Estupidez\nRachel: Mis padres tienen una palabra cuando quieren hablar del futuro de forma segura, si dicen estupidez, entonces saben que cualquier cosa que digan después es hipotética y no se van a enganchar en eso.",
       "label": "Estupidez",
-      "quote": "",
       "note": "",
-      "createdAt": 1761400000007
+      "createdAt": 1761400000007,
+      "episodeTitle": "Inevitable"
     },
     {
       "id": "rookie-t3e10",
@@ -222,7 +223,7 @@
   },
   "meta": {
     "app": "1.3",
-    "patch": 5,
-    "updated": "2026-10-25T12:56:33.306Z"
+    "patch": 6,
+    "updated": "2026-10-25T12:59:12.156Z"
   }
 }
