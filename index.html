@@ -52,7 +52,7 @@ svg{width:18px;height:18px;flex:none}
 .search{position:relative}
 .search input{width:100%;padding:12px 14px 12px 40px;border:0;border-radius:14px;background:var(--card);font-size:1rem}
 .search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--faint)}
-.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--card);border-radius:14px;padding:4px;margin-top:8px}
+.seg{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:var(--card);border-radius:14px;padding:4px;margin-top:8px}
 .seg button{border:0;background:none;border-radius:10px;padding:8px 4px;font:600 .86rem var(--ui);color:var(--muted)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--card)}
 .strip{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:12px -16px 0;padding:0 16px 2px}
@@ -179,7 +179,7 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
 .fl input,.fl textarea,.fl select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:1rem}
 .fl textarea{min-height:120px;resize:vertical;font:400 1.1rem/1.5 var(--serif)}
 .hint{font-size:.78rem;color:var(--muted);margin:0}
-.kseg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--bg);border-radius:14px;padding:4px}
+.kseg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--bg);border-radius:14px;padding:4px}
 .kseg button{border:0;background:none;border-radius:10px;padding:10px 4px;font:600 .9rem var(--ui);color:var(--muted)}
 .kseg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .wrapchips{display:flex;flex-wrap:wrap;gap:6px}
@@ -310,12 +310,13 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   <div class="sh"><h3 id="cTitle">Nueva frase</h3></div>
   <div class="sb">
     <div class="kseg" id="kSeg" role="group" aria-label="Tipo de fuente">
-      <button type="button" data-k="serie">Serie</button><button type="button" data-k="pelicula">Película</button><button type="button" data-k="persona">Persona</button>
+      <button type="button" data-k="serie">Serie</button><button type="button" data-k="pelicula">Película</button><button type="button" data-k="persona">Persona</button><button type="button" data-k="cancion">Canción</button>
     </div>
     <div class="fl"><span id="srcLbl">¿De cuál?</span><div class="wrapchips" id="srcChips"></div></div>
     <div class="box" id="newSrc" hidden>
       <label class="fl"><span id="nsNameLbl">Nombre</span><input name="nsName" autocomplete="off"></label>
       <div class="fl" id="nsRoleF"><span>¿Quién es?</span><div class="wrapchips" id="nsRoles"></div></div>
+      <label class="fl" id="nsYearsF"><span>Años de vida <em>(opcional)</em></span><input name="nsYears" autocomplete="off" placeholder="1856–1943"></label>
       <label class="fl" id="nsPlatF"><span>Plataforma <em>(opcional)</em></span><input name="nsPlat" list="platList" placeholder="Netflix">
         <datalist id="platList"><option>Netflix</option><option>Prime Video</option><option>Disney+</option><option>Max</option><option>Apple TV+</option><option>Cine</option></datalist></label>
       <label class="fl" id="nsSeasF"><span>Episodios por temporada <em>(opcional)</em></span><input name="nsSeasons" inputmode="numeric" placeholder="12, 16, 16"><p class="hint">Un número por temporada, separado por comas. Te deja elegir el episodio con un toque.</p></label>
@@ -323,6 +324,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
     <div class="fl" id="seasF"><span>Temporada</span><div class="rowchips" id="seasChips"></div></div>
     <div class="fl" id="epF"><span>Episodio <em id="epHint"></em></span><div class="epgrid" id="epGrid"></div></div>
     <div class="two" id="manF"><label class="fl"><span>Temporada</span><input name="mS" type="number" min="1" inputmode="numeric"></label><label class="fl"><span>Episodio</span><input name="mE" type="number" min="1" inputmode="numeric"></label></div>
+    <div class="two" id="songF"><label class="fl"><span>Canción</span><input name="song" autocomplete="off" placeholder="Fly Away"></label><label class="fl"><span>Año <em>(opcional)</em></span><input name="year" inputmode="numeric" autocomplete="off" placeholder="2020"></label></div>
     <label class="fl" id="tcF"><span>Minuto</span><input name="tc" placeholder="39:50-42:37" autocomplete="off" inputmode="text"><p class="hint">Inicio y fin, como lo anotas. El fin es opcional.</p></label>
     <label class="fl"><span>La frase</span><textarea name="quote" placeholder="Escríbela tal cual. Para un diálogo: Mike: … (una línea por persona)"></textarea></label>
     <label class="fl" id="whoF"><span>Quién lo dice <em>(opcional)</em></span><input name="who" list="whoList" autocomplete="off" placeholder="Harvey"><datalist id="whoList"></datalist></label>
@@ -349,6 +351,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   <div class="sb">
     <label class="fl"><span>Nombre</span><input name="name" autocomplete="off"></label>
     <div class="fl" id="eRoleF"><span>¿Quién es?</span><div class="wrapchips" id="eRoles"></div></div>
+    <label class="fl" id="eYearsF"><span>Años de vida</span><input name="years" autocomplete="off" placeholder="1856–1943"></label>
     <label class="fl" id="ePlatF"><span>Plataforma</span><input name="plat" list="platList"></label>
     <label class="fl" id="eSeasF"><span>Episodios por temporada</span><input name="seasons" inputmode="numeric" placeholder="12, 16, 16"><p class="hint">Un número por temporada, separado por comas.</p></label>
   </div>
@@ -371,8 +374,9 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
 
 <script>
 (() => {
-  const APP_VERSION = '2.3';
+  const APP_VERSION = '2.4';
   const CHANGELOG = [
+    ['2.4', 'Nuevo tipo Canción (artista, canción, año y minuto), filtro Música y años de vida para personas y artistas.'],
     ['2.3', 'Mapa completo de temporadas y episodios al final de cada serie: toca un cuadrito vacío para agregar su frase.'],
     ['2.2', 'Tema oscuro de cine: luz de proyector, grano de película, tipografía técnica y acentos ámbar.'],
     ['2.1', 'Inicio por filas: cada serie o persona con sus episodios (T1:E3). Las frases solo se ven al tocarlas; el nombre abre todas.'],
@@ -404,7 +408,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   const keyOf = n => String(n).trim().toLowerCase();
   const plural = (n, a, b) => `${n} ${n===1?a:b}`;
   const initials = n => n.split(/\s+/).filter(Boolean).slice(0,2).map(w => w[0]).join('').toUpperCase();
-  const kindName = k => ({ serie: 'Serie', pelicula: 'Película', persona: 'Persona' }[k] || 'Serie');
+  const kindName = k => ({ serie: 'Serie', pelicula: 'Película', persona: 'Persona', cancion: 'Artista' }[k] || 'Serie');
 
   // ---------- storage: GitHub ----------
   const CFG = (() => { const m = location.hostname.match(/^([^.]+)\.github\.io$/); const first = location.pathname.split('/').filter(Boolean)[0];
@@ -451,7 +455,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
     }
     setSync('No se pudo guardar. Revisa tu conexión.'); throw new Error('save');
   }
-  const describe = c => `${c.show}${c.kind === 'serie' ? ` T${c.season}E${c.episode}` : ''}, ${c.label}`;
+  const describe = c => `${c.show}${c.kind === 'serie' ? ` T${c.season}E${c.episode}` : c.kind === 'cancion' && c.song ? ` “${c.song}”` : ''}, ${c.label}`;
   const upsert = (d, c) => { const i = d.clips.findIndex(x => x.id === c.id); i >= 0 ? d.clips[i] = c : d.clips.push(c); };
   const removeClip = id => { const c = S.clips.find(x => x.id === id); return commit(d => { d.clips = d.clips.filter(x => x.id !== id); }, `Elimina frase: ${c ? describe(c) : id}`); };
   async function refresh() {
@@ -471,7 +475,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   }
   const srcBy = k => sources().find(s => s.key === k);
   const order = (a,b) => (a.season||0)-(b.season||0)||(a.episode||0)-(b.episode||0)||(toSec(a.start)||0)-(toSec(b.start)||0);
-  const subtitle = s => s.kind === 'persona' ? (s.role || 'Persona') : s.kind === 'pelicula' ? `Película${s.platform ? ', ' + s.platform : ''}` : `Serie${s.platform ? ', ' + s.platform : ''}`;
+  const subtitle = s => s.kind === 'persona' ? `${s.role || 'Persona'}${s.years ? ', ' + s.years : ''}` : s.kind === 'cancion' ? `Música${s.years ? ', ' + s.years : ''}` : s.kind === 'pelicula' ? `Película${s.platform ? ', ' + s.platform : ''}` : `Serie${s.platform ? ', ' + s.platform : ''}`;
   const kindOf = c => c.kind || 'serie';
 
   // ---------- render ----------
@@ -479,7 +483,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
     if (S.view === 'source' && S.source && srcBy(S.source)) renderSource(); else { S.view = 'home'; renderHome(); }
     $('#fab').innerHTML = `${I.plus}Nueva frase`;
   }
-  const matchQ = (c, q) => !q || [c.show,c.label,c.quote,c.note,c.character,c.episodeTitle,c.context,c.role].join(' ').toLowerCase().includes(q);
+  const matchQ = (c, q) => !q || [c.show,c.label,c.quote,c.note,c.character,c.episodeTitle,c.context,c.role,c.song].join(' ').toLowerCase().includes(q);
   function wireTop() {
     $('#gearBtn').onclick = () => openSettings(); $('#verBtn').onclick = () => openSettings();
   }
@@ -492,7 +496,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
       cs.forEach(c => { const k = `${c.season}-${c.episode}`; (g[k] ||= { label: `T${c.season ?? '?'}:E${c.episode ?? '?'}`, clips: [], s: c.season || 0, e: c.episode || 0 }).clips.push(c); });
       return Object.values(g).sort((a,b) => a.s - b.s || a.e - b.e);
     }
-    return cs.sort((a,b) => (toSec(a.start)||0) - (toSec(b.start)||0) || (a.createdAt||0) - (b.createdAt||0)).map(c => ({ label: c.label || c.start || 'Frase', clips: [c] }));
+    return cs.sort((a,b) => (toSec(a.start)||0) - (toSec(b.start)||0) || (a.createdAt||0) - (b.createdAt||0)).map(c => ({ label: (c.kind === 'cancion' && c.song) || c.label || c.start || 'Frase', clips: [c] }));
   }
 
   function renderHome() {
@@ -507,7 +511,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
       </section>` : ''}
       <div class="sticky">
         <div class="search">${I.search}<input id="q" type="search" placeholder="Busca una frase, persona o serie" value="${esc(S.q)}" aria-label="Buscar"></div>
-        <div class="seg" role="group" aria-label="Tipo">${[['all','Todo'],['serie','Series'],['pelicula','Películas'],['persona','Personas']].map(([k,l]) => `<button type="button" data-t="${k}" aria-pressed="${S.type===k}">${l}</button>`).join('')}</div>
+        <div class="seg" role="group" aria-label="Tipo">${[['all','Todo'],['serie','Series'],['pelicula','Cine'],['persona','Personas'],['cancion','Música']].map(([k,l]) => `<button type="button" data-t="${k}" aria-pressed="${S.type===k}">${l}</button>`).join('')}</div>
       </div>
       <p class="sync" id="sync">${esc(S.syncMsg)}</p>
       <div id="rows"></div>`;
@@ -637,15 +641,16 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
     let where = '';
     if (k === 'serie') where = `T${c.season ?? '?'} E${c.episode ?? '?'}${c.episodeTitle ? ` “${esc(c.episodeTitle)}”` : ''}${c.start ? `, ${esc(c.start)}` : ''}`;
     else if (k === 'pelicula') where = c.start ? esc(c.start) : '';
+    else if (k === 'cancion') where = `${c.song ? `“${esc(c.song)}”` : ''}${c.year ? ` (${esc(c.year)})` : ''}${c.start ? `, ${esc(c.start)}` : ''}`;
     else where = esc(c.context || '');
-    const by = !turns && (k === 'persona' ? '' : c.character) ? `<div class="by">— ${esc(c.character)}</div>` : '';
+    const by = !turns && (k === 'persona' || k === 'cancion' ? '' : c.character) ? `<div class="by">— ${esc(c.character)}</div>` : '';
     el.innerHTML = `
       ${c.label ? `<span class="tag">${esc(c.label)}</span>` : ''}
       ${c.note ? `<p class="paren">(${esc(c.note)})</p>` : ''}
       <div class="qt${turns ? '' : ' single'}${long ? ' clamp' : ''}">${body}</div>
       ${long ? '<button type="button" class="more" aria-expanded="false">Ver completa</button>' : ''}
       ${by}
-      <div class="qf"><div class="meta">${showSource || k === 'persona' ? `<span><b>${esc(c.show)}</b>${k==='persona' && c.role ? `, ${esc(c.role)}` : ''}</span>` : ''}${where ? `<span>${where}</span>` : ''}</div>
+      <div class="qf"><div class="meta">${showSource || k === 'persona' || k === 'cancion' ? `<span><b>${esc(c.show)}</b>${k==='persona' && c.role ? `, ${esc(c.role)}` : ''}</span>` : ''}${where ? `<span>${where}</span>` : ''}</div>
         <button type="button" class="mini" data-a="share" aria-label="Compartir">${I.share}</button>
         <button type="button" class="mini" data-a="edit" aria-label="Editar">${I.edit}</button></div>`;
     const more = el.querySelector('.more');
@@ -657,8 +662,8 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
 
   async function share(c) {
     const k = kindOf(c);
-    const src = k === 'serie' ? `${c.show} T${c.season}E${c.episode}` : c.show;
-    const text = `“${c.quote}”\n— ${k === 'persona' ? c.show : (c.character ? c.character + ', ' : '') + src}`;
+    const src = k === 'serie' ? `${c.show} T${c.season}E${c.episode}` : k === 'cancion' ? `${c.show}, “${c.song || ''}”` : c.show;
+    const text = `“${c.quote}”\n— ${k === 'persona' || k === 'cancion' ? src : (c.character ? c.character + ', ' : '') + src}`;
     try { if (navigator.share) { await navigator.share({ text }); return; } } catch (e) { if (e.name === 'AbortError') return; }
     try { await navigator.clipboard.writeText(text); toast('Frase copiada'); } catch { toast('No se pudo copiar'); }
   }
@@ -667,7 +672,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   const cf = $('#cForm');
   const C = { kind: 'serie', src: null, isNew: false, role: '', season: null, episode: null, editing: null };
   let cfInit = '';
-  const formVals = () => JSON.stringify([C.kind, C.src, C.isNew, C.role, C.season, C.episode, ...['nsName','nsPlat','nsSeasons','mS','mE','tc','quote','who','ctx','label','note'].map(n => cf[n].value)]);
+  const formVals = () => JSON.stringify([C.kind, C.src, C.isNew, C.role, C.season, C.episode, ...['nsName','nsPlat','nsSeasons','nsYears','mS','mE','tc','song','year','quote','who','ctx','label','note'].map(n => cf[n].value)]);
 
   function chipsHTML(items, pressed) { return items.map(([v, l]) => `<button type="button" class="chip" data-v="${esc(v)}" aria-pressed="${pressed === v}">${esc(l)}</button>`).join(''); }
   function curSource() { return C.isNew ? null : (C.src ? srcBy(C.src) : null); }
@@ -676,18 +681,19 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   function buildComposer() {
     $('#kSeg').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === C.kind)));
     const list = sources().filter(s => s.kind === C.kind);
-    $('#srcLbl').textContent = C.kind === 'persona' ? '¿Quién lo dijo?' : C.kind === 'pelicula' ? '¿Qué película?' : '¿Qué serie?';
+    $('#srcLbl').textContent = C.kind === 'cancion' ? '¿Qué artista?' : C.kind === 'persona' ? '¿Quién lo dijo?' : C.kind === 'pelicula' ? '¿Qué película?' : '¿Qué serie?';
     const sc = $('#srcChips');
-    sc.innerHTML = chipsHTML(list.map(s => [s.key, s.name]), C.isNew ? null : C.src) + `<button type="button" class="chip new" data-v="__new" aria-pressed="${C.isNew}">+ ${C.kind === 'persona' ? 'Nueva persona' : C.kind === 'pelicula' ? 'Nueva película' : 'Nueva serie'}</button>`;
+    sc.innerHTML = chipsHTML(list.map(s => [s.key, s.name]), C.isNew ? null : C.src) + `<button type="button" class="chip new" data-v="__new" aria-pressed="${C.isNew}">+ ${C.kind === 'persona' ? 'Nueva persona' : C.kind === 'cancion' ? 'Nuevo artista' : C.kind === 'pelicula' ? 'Nueva película' : 'Nueva serie'}</button>`;
     sc.querySelectorAll('button').forEach(b => b.onclick = () => { if (b.dataset.v === '__new') { C.isNew = true; C.src = null; } else { C.isNew = false; C.src = b.dataset.v; } C.season = null; C.episode = null; buildComposer(); if (C.isNew) cf.nsName.focus(); });
     // new source
     $('#newSrc').hidden = !C.isNew;
     $('#nsNameLbl').textContent = C.kind === 'persona' ? 'Nombre' : 'Título';
-    cf.nsName.placeholder = C.kind === 'persona' ? 'Richard Feynman' : C.kind === 'pelicula' ? 'Interstellar' : 'Breaking Bad';
+    cf.nsName.placeholder = C.kind === 'cancion' ? 'Tones and I' : C.kind === 'persona' ? 'Richard Feynman' : C.kind === 'pelicula' ? 'Interstellar' : 'Breaking Bad';
     $('#nsRoleF').hidden = C.kind !== 'persona';
     $('#nsRoles').innerHTML = chipsHTML(ROLES.map(r => [r, r]), C.role);
     $('#nsRoles').querySelectorAll('button').forEach(b => b.onclick = () => { C.role = b.dataset.v; if (C.role === 'Mía' && !cf.nsName.value.trim()) cf.nsName.value = 'Mauricio'; buildComposer(); });
-    $('#nsPlatF').hidden = C.kind === 'persona';
+    $('#nsPlatF').hidden = C.kind === 'persona' || C.kind === 'cancion';
+    $('#nsYearsF').hidden = !(C.kind === 'persona' || C.kind === 'cancion');
     $('#nsSeasF').hidden = C.kind !== 'serie';
     // season / episode
     const isSerie = C.kind === 'serie', seas = isSerie ? seasonsOf() : null, hasSrc = C.isNew || !!C.src;
@@ -710,7 +716,8 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
       requestAnimationFrame(() => $('#seasChips [aria-pressed="true"]')?.scrollIntoView({ inline: 'center', block: 'nearest' }));
     }
     $('#tcF').hidden = C.kind === 'persona';
-    $('#whoF').hidden = C.kind === 'persona';
+    $('#songF').hidden = C.kind !== 'cancion';
+    $('#whoF').hidden = C.kind === 'persona' || C.kind === 'cancion';
     $('#ctxF').hidden = C.kind !== 'persona';
     const whos = [...new Set(S.clips.filter(c => keyOf(c.show) === C.src).map(c => c.character).filter(Boolean))];
     $('#whoList').innerHTML = whos.map(w => `<option value="${esc(w)}">`).join('');
@@ -744,7 +751,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
     if (clip) {
       if (!seasonsOf()) { cf.mS.value = clip.season ?? ''; cf.mE.value = clip.episode ?? ''; }
       cf.tc.value = clip.end ? `${clip.start} - ${clip.end}` : (clip.start || '');
-      cf.quote.value = clip.quote || ''; cf.who.value = clip.character || ''; cf.ctx.value = clip.context || ''; cf.label.value = clip.label || ''; cf.note.value = clip.note || '';
+      cf.quote.value = clip.quote || ''; cf.who.value = clip.character || ''; cf.ctx.value = clip.context || ''; cf.song.value = clip.song || ''; cf.year.value = clip.year || ''; cf.label.value = clip.label || ''; cf.note.value = clip.note || '';
     }
     $('#cTitle').textContent = clip ? (clip.quote ? 'Editar frase' : 'Escribir la frase') : 'Nueva frase';
     $('#kSeg').style.opacity = clip ? .55 : 1;
@@ -769,7 +776,8 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
     }
     const quote = cf.quote.value.trim();
     if (C.kind === 'persona' && !quote) return bad(cf.quote, 'Escribe la frase');
-    const label = cf.label.value.trim() || quote.replace(/^[^:\n]{1,24}:\s*/, '').split(/\s+/).slice(0,3).join(' ');
+    if (C.kind === 'cancion' && !cf.song.value.trim()) return bad(cf.song, 'Escribe el nombre de la canción');
+    const label = cf.label.value.trim() || (C.kind === 'cancion' && !quote ? cf.song.value.trim() : '') || quote.replace(/^[^:\n]{1,24}:\s*/, '').split(/\s+/).slice(0,3).join(' ');
     if (!label) return bad(cf.label, 'Pon una etiqueta corta o escribe la frase');
     const old = C.editing, src = curSource();
     const c = {
@@ -781,12 +789,13 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
       start, end, quote, label, note: cf.note.value.trim(),
       character: C.kind === 'persona' ? '' : cf.who.value.trim(),
       context: C.kind === 'persona' ? cf.ctx.value.trim() : '',
+      song: C.kind === 'cancion' ? cf.song.value.trim() : undefined, year: C.kind === 'cancion' ? cf.year.value.trim() : undefined,
       role: C.kind === 'persona' ? (C.isNew ? C.role : (src?.role || old?.role || '')) : undefined,
       createdAt: old?.createdAt || Date.now(), updatedAt: Date.now()
     };
-    if (c.role === undefined) delete c.role;
+    ['role','song','year'].forEach(k => { if (c[k] === undefined) delete c[k]; });
     if (old && (old.season !== c.season || old.episode !== c.episode)) delete c.episodeTitle;
-    const newSrc = C.isNew ? { name, kind: C.kind, platform: C.kind === 'persona' ? '' : cf.nsPlat.value.trim(), seasons: C.kind === 'serie' ? seasonsOf() : null, ...(C.kind === 'persona' ? { role: C.role } : {}) } : null;
+    const newSrc = C.isNew ? { name, kind: C.kind, platform: C.kind === 'persona' || C.kind === 'cancion' ? '' : cf.nsPlat.value.trim(), seasons: C.kind === 'serie' ? seasonsOf() : null, ...(C.kind === 'persona' ? { role: C.role } : {}), ...((C.kind === 'persona' || C.kind === 'cancion') && cf.nsYears.value.trim() ? { years: cf.nsYears.value.trim() } : {}) } : null;
     const prev = old ? { ...old } : null;
     const btn = $('#saveBtn'); btn.disabled = true; btn.textContent = 'Guardando…';
     try {
@@ -808,15 +817,15 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   function openEdit(s) {
     E = s; eRole = s.role || ''; ef.reset();
     $('#eTitle').textContent = `Editar ${kindName(s.kind).toLowerCase()}`;
-    ef.name.value = s.name; ef.plat.value = s.platform || ''; ef.seasons.value = s.seasons ? s.seasons.join(', ') : '';
-    $('#eRoleF').hidden = s.kind !== 'persona'; $('#ePlatF').hidden = s.kind === 'persona'; $('#eSeasF').hidden = s.kind !== 'serie';
+    ef.name.value = s.name; ef.plat.value = s.platform || ''; ef.seasons.value = s.seasons ? s.seasons.join(', ') : ''; ef.years.value = s.years || '';
+    $('#eRoleF').hidden = s.kind !== 'persona'; $('#ePlatF').hidden = s.kind === 'persona' || s.kind === 'cancion'; $('#eSeasF').hidden = s.kind !== 'serie'; $('#eYearsF').hidden = !(s.kind === 'persona' || s.kind === 'cancion');
     const drawRoles = () => { $('#eRoles').innerHTML = chipsHTML(ROLES.map(r => [r, r]), eRole); $('#eRoles').querySelectorAll('button').forEach(b => b.onclick = () => { eRole = b.dataset.v; drawRoles(); }); };
     drawRoles(); $('#eDlg').showModal();
   }
   ef.onsubmit = async ev => {
     ev.preventDefault(); const name = ef.name.value.trim(); if (!name) return ef.name.focus();
     const seasons = E.kind === 'serie' ? (ef.seasons.value.match(/\d+/g) || []).map(Number).filter(n=>n>0) : null;
-    const entry = { name, kind: E.kind, platform: E.kind === 'persona' ? '' : ef.plat.value.trim(), seasons: seasons && seasons.length ? seasons : null, ...(E.kind === 'persona' ? { role: eRole } : {}) };
+    const entry = { name, kind: E.kind, platform: E.kind === 'persona' || E.kind === 'cancion' ? '' : ef.plat.value.trim(), seasons: seasons && seasons.length ? seasons : null, ...(E.kind === 'persona' ? { role: eRole } : {}), ...(ef.years.value.trim() ? { years: ef.years.value.trim() } : {}) };
     const oldKey = E.key, newKey = keyOf(name);
     try {
       await commit(d => { if (oldKey !== newKey) delete d.catalog[oldKey]; d.catalog[newKey] = entry; d.clips.forEach(c => { if (keyOf(c.show) === oldKey) { c.show = name; if (E.kind === 'persona') c.role = eRole; } }); }, `Actualiza fuente: ${name}`);

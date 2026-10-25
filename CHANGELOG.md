@@ -2,6 +2,11 @@
 
 Formato: **mayor.menor.parche**. Los parches (1.2.1, 1.2.2…) son frases guardadas desde la app y quedan en el historial de commits de `echo.json`.
 
+## v2.4
+- Nuevo tipo **Canción**: artista, canción, año y minuto; filtro "Música" en el inicio.
+- Años de vida para personas y artistas, visibles junto a su rol.
+- Filtro "Películas" renombrado a "Cine" para que quepan los cinco tipos.
+
 ## v2.3
 - Al final de la vista de cada serie: mapa completo de temporadas y episodios (solo ahí, no en el inicio).
 - Cuadrito vacío: abre el editor con temporada y episodio ya elegidos para agregar la frase.
