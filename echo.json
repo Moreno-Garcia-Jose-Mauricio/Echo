@@ -12,7 +12,7 @@
       "character": "",
       "quote": "Si alguien más pierde la fe en mi, no importa, pero contigo es diferente.",
       "label": "Maybe un tiempo atrás...",
-      "note": "",
+      "note": "Harvey platica con Donna",
       "createdAt": 1761400000001,
       "episodeTitle": "Intent"
     },
@@ -217,7 +217,7 @@
   },
   "meta": {
     "app": "1.2",
-    "patch": 1,
-    "updated": "2026-10-25T12:18:42.562Z"
+    "patch": 2,
+    "updated": "2026-10-25T12:19:17.152Z"
   }
 }
