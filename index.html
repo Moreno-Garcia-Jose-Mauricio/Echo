@@ -35,6 +35,12 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .top{display:flex;align-items:center;gap:10px;padding:8px 0 4px}
 .logo{font:800 2.6rem/1 var(--ui);letter-spacing:-0.05em;margin:0;flex:1}
 .logo span{color:var(--accent)}
+.ver{border:0;background:var(--paper);color:var(--muted);font:700 .8rem var(--script);border-radius:999px;padding:7px 11px;box-shadow:0 1px 0 var(--line)}
+.vinfo{background:var(--desk);border-radius:12px;padding:12px 14px;font-size:.88rem;display:grid;gap:4px}
+.vinfo b{font-family:var(--script)}
+.log{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:.86rem}
+.log li{display:grid;grid-template-columns:44px 1fr;gap:8px;color:var(--muted)}
+.log li b{font-family:var(--script);color:var(--ink)}
 .iconbtn{border:0;background:var(--paper);border-radius:14px;width:44px;height:44px;display:grid;place-items:center;color:var(--ink);box-shadow:0 1px 0 var(--line)}
 .iconbtn svg{width:20px;height:20px}
 .search{position:relative;margin:12px 0 4px}
@@ -197,12 +203,14 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
 </form></dialog>
 
 <dialog id="settingsDlg"><form class="sheet" id="settingsForm">
-  <div class="sheet-head"><h3>Conexión con GitHub</h3></div>
+  <div class="sheet-head"><h3>Ajustes</h3></div>
   <div class="sheet-body">
     <p class="hint" style="font-size:.9rem">Repo: <b id="stRepo"></b></p>
     <label class="field"><span>Token</span><input name="token" type="password" autocomplete="off" placeholder="github_pat_…"></label>
     <p class="hint">Fine-grained token con acceso solo a este repo y permiso <b>Contents: Read and write</b>. Se guarda únicamente en este dispositivo.</p>
     <p class="dest" id="stMsg"></p>
+    <div class="field"><span>Versión</span><div class="vinfo" id="vInfo"></div></div>
+    <div class="field"><span>Novedades de la app</span><ul class="log" id="vLog"></ul></div>
   </div>
   <div class="sheet-foot"><div class="row-actions"><button type="button" class="btn del" id="clearToken">Quitar</button><button type="button" class="btn ghost" data-close>Cancelar</button><button type="submit" class="btn primary">Conectar</button></div></div>
 </form></dialog>
@@ -232,7 +240,13 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
 <script>
 (() => {
   const $ = s => document.querySelector(s);
-  const S = { clips: [], catalog: {}, view: 'home', current: null, q: '', sel: null, pendingOnly: false, editing: null, ctx: null, pick: { season: null, episode: null }, feature: null, syncMsg: '' };
+  const APP_VERSION = '1.2';
+  const CHANGELOG = [
+    ['1.2', 'Versiones visibles: cada frase guardada sube el último número (1.2.1, 1.2.2…).'],
+    ['1.1', 'Rediseño: escenas en formato guion, pendientes, selector de episodios con botones y compartir.'],
+    ['1.0', 'Primera versión en GitHub: escenas, mapa de episodios y guardado con commits.']
+  ];
+  const S = { meta: null, clips: [], catalog: {}, view: 'home', current: null, q: '', sel: null, pendingOnly: false, editing: null, ctx: null, pick: { season: null, episode: null }, feature: null, syncMsg: '' };
   const ICON = {
     search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
     gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>',
@@ -268,7 +282,7 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
   const b64d = s => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\s/g, '')), c => c.charCodeAt(0)));
   const b64e = s => { let bin = ''; new TextEncoder().encode(s).forEach(x => bin += String.fromCharCode(x)); return btoa(bin); };
   const gh = (t, extra = {}) => ({ Authorization: 'Bearer ' + t, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...extra });
-  function applyData(d) { S.clips = Array.isArray(d.clips) ? d.clips.slice() : []; S.catalog = d.catalog ? JSON.parse(JSON.stringify(d.catalog)) : {}; }
+  function applyData(d) { S.meta = d.meta || null; S.clips = Array.isArray(d.clips) ? d.clips.slice() : []; S.catalog = d.catalog ? JSON.parse(JSON.stringify(d.catalog)) : {}; }
   const lsLoad = () => { try { const d = JSON.parse(localStorage.getItem(LS)); if (d) applyData(d); } catch {} };
   const lsSave = () => { try { localStorage.setItem(LS, JSON.stringify({ clips: S.clips, catalog: S.catalog })); } catch {} };
 
@@ -294,10 +308,12 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
       const { data, sha } = await fetchRemote();
       data.clips ||= []; data.catalog ||= {};
       mutate(data);
-      const body = { message, content: b64e(JSON.stringify(data, null, 2) + '\n'), branch: CFG.branch };
+      const m = data.meta && data.meta.app === APP_VERSION ? data.meta : { app: APP_VERSION, patch: 0 };
+      m.patch = (m.patch || 0) + 1; m.updated = new Date().toISOString(); data.meta = m;
+      const body = { message: `v${APP_VERSION}.${m.patch}: ${message}`, content: b64e(JSON.stringify(data, null, 2) + '\n'), branch: CFG.branch };
       if (sha) body.sha = sha;
       const r = await fetch(API, { method: 'PUT', headers: gh(t, { 'Content-Type': 'application/json' }), body: JSON.stringify(body) });
-      if (r.ok) { applyData(data); lsSave(); render(); setSync('Guardado en GitHub'); setTimeout(() => S.syncMsg === 'Guardado en GitHub' && setSync(''), 3000); return; }
+      if (r.ok) { applyData(data); lsSave(); render(); setSync(`Guardado en GitHub como v${versionStr()}`); setTimeout(() => S.syncMsg.startsWith('Guardado en GitHub') && setSync(''), 4000); return; }
       if (r.status === 401 || r.status === 403) { setSync('Tu token no tiene permiso para escribir. Revísalo en ajustes.'); throw new Error('token'); }
       if (r.status !== 409 && r.status !== 422) break;
     }
@@ -311,6 +327,7 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
     try { const { data } = await fetchRemote(); applyData(data); lsSave(); render(); setSync(getToken() ? '' : 'Solo lectura. Conecta tu token en ajustes para guardar.'); }
     catch (e) { setSync(e.message === 'token' ? 'Tu token no funciona. Revísalo en ajustes.' : 'Sin conexión. Mostrando la última copia guardada.'); }
   }
+  function versionStr() { const m = S.meta; return m && m.app === APP_VERSION && m.patch ? `${APP_VERSION}.${m.patch}` : APP_VERSION; }
   function setSync(t) { S.syncMsg = t; const el = $('#sync'); if (el) el.textContent = t; }
 
   // ---------- model ----------
@@ -345,7 +362,7 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
   function renderHome(app) {
     const series = allSeries(), n = S.clips.length, pend = pending().length;
     app.innerHTML = `
-      <div class="top"><h1 class="logo">Echo<span>.</span></h1><button class="iconbtn" id="gearBtn" type="button" aria-label="Conexión con GitHub">${ICON.gear}</button></div>
+      <div class="top"><h1 class="logo">Echo<span>.</span></h1><button class="ver" id="verBtn" type="button" aria-label="Versión y novedades">v${versionStr()}</button><button class="iconbtn" id="gearBtn" type="button" aria-label="Conexión con GitHub">${ICON.gear}</button></div>
       <div class="search">${ICON.search}<input id="q" type="search" placeholder="Busca una frase, personaje o serie" value="${esc(S.q)}" aria-label="Buscar"></div>
       <p class="sync" id="sync">${esc(S.syncMsg)}</p>
       <div id="body"></div>
@@ -391,6 +408,7 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
     const qi = $('#q');
     qi.oninput = e => { S.q = e.target.value; const pos = e.target.selectionStart; render(); const n2 = $('#q'); n2.focus(); n2.setSelectionRange(pos,pos); };
     $('#gearBtn').onclick = () => openSettings();
+    $('#verBtn').onclick = () => openSettings();
     $('#exportBtn').onclick = () => {
       const blob = new Blob([JSON.stringify({ clips: S.clips, catalog: S.catalog }, null, 2)], { type: 'application/json' });
       const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'echo.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
@@ -643,6 +661,9 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
     $('#stMsg').classList.toggle('warn', !getToken());
     $('#stRepo').textContent = `${CFG.owner}/${CFG.repo}`;
     $('#clearToken').hidden = !getToken();
+    const m = S.meta, when = m?.updated ? new Date(m.updated).toLocaleString('es-MX', { dateStyle: 'medium', timeStyle: 'short' }) : null;
+    $('#vInfo').innerHTML = `<div>App: <b>v${APP_VERSION}</b></div><div>Datos: <b>v${esc(versionStr())}</b>${m?.app === APP_VERSION && m.patch ? ` (${plural(m.patch,'cambio','cambios')} de frases en esta versión)` : ' (sin cambios de frases en esta versión)'}</div>${when ? `<div>Último guardado: ${esc(when)}</div>` : ''}`;
+    $('#vLog').innerHTML = CHANGELOG.map(([v, t]) => `<li><b>v${v}</b><span>${esc(t)}</span></li>`).join('');
     stDlg.showModal();
   }
   stForm.onsubmit = async ev => {

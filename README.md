@@ -18,6 +18,18 @@ App personal para guardar escenas y frases de series y películas, con el minuto
 
 Sin token, la app funciona en modo solo lectura.
 
+## Versiones
+
+La versión aparece en la app (junto al logo y en Ajustes) y en cada commit.
+
+| Cambio | Ejemplo | Quién lo sube |
+|---|---|---|
+| **Mayor**: cambio de fondo en la app, solo cuando se pide | 1.x → 2.0 | Claude, a petición |
+| **Menor**: cambio en la app (diseño, funciones) | 1.2 → 1.3 | Claude |
+| **Parche**: frases y escenas guardadas desde la app | 1.2.1, 1.2.2… | La app, en automático |
+
+El número de parche vive en `echo.json` (`meta.patch`) y se reinicia cuando sale una nueva versión de la app. Las versiones de la app están marcadas con tags (`v1.0`, `v1.1`, `v1.2`…). Historial completo en [CHANGELOG.md](CHANGELOG.md).
+
 ## Formato de una escena
 
 ```json
@@ -32,6 +44,7 @@ Sin token, la app funciona en modo solo lectura.
   "start": "43:40",
   "end": "44:30",
   "label": "El beso",
+  "character": "",
   "quote": "",
   "note": ""
 }
