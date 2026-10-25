@@ -2,6 +2,12 @@
 
 Formato: **mayor.menor.parche**. Los parches (1.2.1, 1.2.2…) son frases guardadas desde la app y quedan en el historial de commits de `echo.json`.
 
+## v2.1
+- Inicio por filas: cada serie, película o persona en su propia fila con sus episodios (T1:E3). Las frases ya no se muestran hasta tocarlas.
+- Tocar un episodio abre solo su frase (o frases); tocar el nombre abre la ventana con todas.
+- Episodios sin frase en tono tenue; al tocarlos se abre el editor para escribirla.
+- Frase de bienvenida en inglés con la palabra Echo.
+
 ## v2.0
 - Rediseño completo en una sola pantalla: frase de bienvenida, buscador, filtros por tipo (Series, Películas, Personas) y fuentes en una tira deslizable.
 - Solo se muestran las temporadas y episodios que ya tienen frase; las escenas sin frase quedan en "Por completar".
