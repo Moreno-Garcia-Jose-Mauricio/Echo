@@ -55,13 +55,14 @@
       "platform": "Netflix",
       "season": 7,
       "episode": 6,
-      "episodeTitle": "Home to Roost",
       "start": "23:08",
       "end": "25:00",
+      "character": "Donna",
+      "quote": "Recibí una noticia que debía esperar y no lo hice",
       "label": "Pareja",
-      "quote": "",
-      "note": "",
-      "createdAt": 1761400000004
+      "note": "Donna pierde a Harvey",
+      "createdAt": 1761400000004,
+      "episodeTitle": "Home to Roost"
     },
     {
       "id": "suits-t7e10a",
@@ -218,8 +219,8 @@
     }
   },
   "meta": {
-    "app": "1.2",
-    "patch": 4,
-    "updated": "2026-10-25T12:33:24.551Z"
+    "app": "1.3",
+    "patch": 1,
+    "updated": "2026-10-25T12:48:37.375Z"
   }
 }
