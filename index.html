@@ -4,23 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Echo</title>
-<meta name="theme-color" content="#15171B">
+<meta name="theme-color" content="#0B0D12">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#ECEDEF; --card:#FFFFFF; --ink:#15171B; --muted:#62676F; --faint:#9CA1A8; --line:#DCDEE2; --chip:#F0F1F3;
-  --accent:#D2382F; --danger:#B4372F;
+  --bg:#0B0D12; --card:#141820; --card2:#1B2029; --ink:#ECEEF2; --muted:#9097A3; --faint:#5F6672; --line:#262C37; --chip:#1E232D;
+  --accent:#F4B740; --accent2:#4FD1E8; --danger:#FF6B5E;
   --ui:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
   --serif:"Newsreader",Georgia,"Times New Roman",serif;
-  color-scheme:light; box-sizing:border-box;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:dark; box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#15171B; --card:#1F2227; --ink:#EDEEF0; --muted:#A3A8B0; --faint:#6C7179; --line:#30343A; --chip:#292D33; --accent:#F25D53; --danger:#F07A70; color-scheme:dark;}}
-:root[data-theme="dark"]{--bg:#15171B; --card:#1F2227; --ink:#EDEEF0; --muted:#A3A8B0; --faint:#6C7179; --line:#30343A; --chip:#292D33; --accent:#F25D53; --danger:#F07A70; color-scheme:dark;}
 *,*::before,*::after{box-sizing:inherit}
 [hidden]{display:none!important}
 html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
@@ -196,6 +194,95 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
 .log li b{color:var(--ink)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--card);padding:10px 10px 10px 16px;border-radius:14px;display:flex;gap:12px;align-items:center;z-index:40;max-width:92vw;box-shadow:0 8px 22px rgba(0,0,0,.25);font-size:.9rem}
 .toast button{border:0;background:rgba(127,127,127,.3);color:inherit;border-radius:10px;padding:7px 12px;font-weight:600}
+
+/* ===== v2.2 cinematic dark theme ===== */
+body{background:
+  radial-gradient(120% 55% at 50% -10%,rgba(244,183,64,.13),transparent 60%),
+  radial-gradient(80% 40% at 100% 100%,rgba(79,209,232,.06),transparent 70%),
+  var(--bg);background-attachment:fixed}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body::before{background:var(--bg)}
+.logo{font-weight:800;letter-spacing:-0.06em}
+.logo span{color:var(--accent);text-shadow:0 0 14px rgba(244,183,64,.7)}
+.pill{background:transparent;border:1px solid var(--line);color:var(--accent);font:500 .74rem var(--mono);letter-spacing:.04em}
+.pill::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#FF4D4D;margin-right:6px;vertical-align:1px;box-shadow:0 0 8px #FF4D4D;animation:rec 2s infinite}
+@keyframes rec{50%{opacity:.25}}
+.iconbtn{background:var(--card);border:1px solid var(--line)}
+.hero{position:relative;margin:14px 0 6px;padding:34px 18px 22px;border-radius:4px;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);border-top:10px solid #000;border-bottom:10px solid #000;box-shadow:0 0 0 1px var(--line)}
+.hero::before{content:"SCENE 01  ·  TAKE 1";position:absolute;top:10px;left:18px;font:500 .64rem var(--mono);letter-spacing:.22em;color:var(--faint)}
+.hero blockquote{font-size:clamp(1.9rem,8vw,2.6rem);color:#FFF6E3;text-shadow:0 0 28px rgba(244,183,64,.25)}
+.hero blockquote::before,.hero blockquote::after{color:var(--accent)}
+.hero p{font-family:var(--mono);font-size:.72rem;letter-spacing:.02em;color:var(--muted)}
+.counts div{font-family:var(--mono);font-weight:500;color:var(--accent)}
+.counts small{font-family:var(--ui);color:var(--muted)}
+.sticky{background:linear-gradient(180deg,var(--bg) 80%,transparent)}
+.search input{background:var(--card);border:1px solid var(--line)}
+.search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(244,183,64,.15)}
+.seg{background:var(--card);border:1px solid var(--line)}
+.seg button{font:500 .8rem var(--mono);letter-spacing:.02em;text-transform:uppercase}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#14100A}
+.srow2{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:14px}
+.rowh b{font-size:1.12rem}
+.rowh small{font-family:var(--mono);font-size:.7rem;letter-spacing:.03em;text-transform:uppercase}
+.rowh .rc{font-family:var(--mono);color:var(--accent)}
+.rowh .sw{box-shadow:0 0 18px -4px var(--c)}
+.epc{font:600 .8rem var(--mono);letter-spacing:.02em;background:color-mix(in srgb,var(--c) 85%,#000);color:#fff;border-radius:6px;box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 70%,#fff 10%),0 0 16px -6px var(--c)}
+.epc.todo{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line);border:1px dashed color-mix(in srgb,var(--c) 45%,var(--line))}
+.empty b{color:var(--ink)}
+.sync{font-family:var(--mono);font-size:.7rem}
+.fab{background:var(--accent);color:#14100A;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 10px 30px rgba(244,183,64,.25)}
+.back{background:var(--card);border:1px solid var(--line);font-family:var(--mono);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.srch{border-radius:6px;border-top:8px solid #000;border-bottom:8px solid #000}
+.srch h2{text-shadow:0 2px 20px rgba(0,0,0,.4)}
+.srch p{font-family:var(--mono);font-size:.74rem}
+.chip{background:var(--card);border:1px solid var(--line);font-family:var(--mono);font-weight:500}
+.chip[aria-pressed="true"]{background:var(--accent);color:#14100A;border-color:var(--accent)}
+.group{font:500 .7rem var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent2)}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px}
+.q::before{box-shadow:0 0 12px var(--c)}
+.qt{color:#F4F1EA;font-size:1.2rem}
+.qt.single::before,.qt.single::after{color:var(--accent)}
+.turn .who{font-family:var(--mono);font-weight:600;letter-spacing:.12em}
+.by{color:var(--accent)}
+.tag{font:500 .68rem var(--mono);letter-spacing:.06em;text-transform:uppercase;background:transparent;border:1px solid color-mix(in srgb,var(--c) 60%,var(--line));color:var(--ink)}
+.meta{font-family:var(--mono);font-size:.7rem;letter-spacing:.02em}
+.meta b{font-family:var(--ui);font-size:.82rem}
+.qf{border-top:1px dashed var(--line)}
+.mini{background:var(--chip);border:1px solid var(--line)}
+.pend{background:var(--card);border:1px solid var(--line)}
+.ph b{font-family:var(--mono);color:var(--accent)}
+.prow{border-top:1px solid var(--line)}
+.prow em{font-family:var(--mono);color:var(--accent);text-transform:uppercase;font-size:.72rem;letter-spacing:.06em}
+dialog{background:var(--card);border:1px solid var(--line);border-bottom:0}
+dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
+.sh::before{background:var(--line)}
+.sh h3{letter-spacing:-0.02em}
+.qtitle span{font-family:var(--mono);font-size:.82rem;color:var(--accent)}
+#qBody .q{background:var(--card2)}
+.sf{border-top:1px solid var(--line)}
+.fl > span{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.fl > span em{text-transform:none;letter-spacing:0}
+.fl input,.fl textarea,.fl select{background:var(--bg);border:1px solid var(--line)}
+.fl input:focus,.fl textarea:focus{outline:none;border-color:var(--accent)}
+.fl textarea{color:#F4F1EA}
+.kseg{background:var(--bg);border:1px solid var(--line)}
+.kseg button{font-family:var(--mono);text-transform:uppercase;font-size:.78rem;letter-spacing:.04em}
+.kseg button[aria-pressed="true"]{background:var(--accent);color:#14100A;box-shadow:none}
+.wrapchips .chip,.rowchips .chip{background:var(--bg)}
+.wrapchips .chip[aria-pressed="true"],.rowchips .chip[aria-pressed="true"]{background:var(--accent);color:#14100A}
+.chip.new[aria-pressed="true"]{color:var(--accent)!important;border-color:var(--accent)}
+.box{background:var(--bg);border:1px solid var(--line)}
+.box .fl input{background:var(--card)}
+.ep{background:var(--bg);border:1px solid var(--line);font-family:var(--mono);border-radius:6px}
+.ep[aria-pressed="true"]{background:var(--accent);color:#14100A;border-color:var(--accent)}
+.dest{font-family:var(--mono);font-size:.76rem}
+.primary{background:var(--accent);color:#14100A}
+.ghost{background:var(--chip);border:1px solid var(--line)}
+.vinfo{background:var(--bg);border:1px solid var(--line);font-family:var(--mono);font-size:.78rem}
+.toast{background:var(--accent);color:#14100A;font-weight:600}
+.toast button{background:rgba(0,0,0,.15)}
+@media (prefers-reduced-motion:reduce){.pill::before{animation:none}}
 </style>
 </head>
 <body>
@@ -268,8 +355,9 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
 
 <script>
 (() => {
-  const APP_VERSION = '2.1';
+  const APP_VERSION = '2.2';
   const CHANGELOG = [
+    ['2.2', 'Tema oscuro de cine: luz de proyector, grano de película, tipografía técnica y acentos ámbar.'],
     ['2.1', 'Inicio por filas: cada serie o persona con sus episodios (T1:E3). Las frases solo se ven al tocarlas; el nombre abre todas.'],
     ['2.0', 'Rediseño completo en una sola pantalla: frase de bienvenida, filtros por tipo y fuente, solo temporadas con frases, y frases de personas (científicos, profesores y tuyas).'],
     ['1.3', 'Frases largas y diálogos legibles, mapa tenue/sólido y contador de frases en la cartelera.'],

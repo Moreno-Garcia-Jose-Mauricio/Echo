@@ -2,6 +2,11 @@
 
 Formato: **mayor.menor.parche**. Los parches (1.2.1, 1.2.2…) son frases guardadas desde la app y quedan en el historial de commits de `echo.json`.
 
+## v2.2
+- Tema oscuro de cine: luz de proyector, grano de película y barras de pantalla panorámica en la portada.
+- Tipografía técnica (monoespaciada) para episodios, minutos, etiquetas y versión; acentos ámbar con brillo.
+- Indicador de grabación junto a la versión y botones en ámbar.
+
 ## v2.1
 - Inicio por filas: cada serie, película o persona en su propia fila con sus episodios (T1:E3). Las frases ya no se muestran hasta tocarlas.
 - Tocar un episodio abre solo su frase (o frases); tocar el nombre abre la ventana con todas.
