@@ -87,13 +87,14 @@
       "platform": "Netflix",
       "season": 7,
       "episode": 10,
-      "episodeTitle": "Donna",
       "start": "43:40",
       "end": "44:30",
+      "character": "Louis",
+      "quote": "Debí decírselo cuando pude, pero es algo con lo que tendré que vivir toda mi vida.",
       "label": "El beso",
-      "quote": "",
       "note": "",
-      "createdAt": 1761400000006
+      "createdAt": 1761400000006,
+      "episodeTitle": "Donna"
     },
     {
       "id": "suits-t7e13",
@@ -221,7 +222,7 @@
   },
   "meta": {
     "app": "1.3",
-    "patch": 3,
-    "updated": "2026-10-25T12:52:39.340Z"
+    "patch": 4,
+    "updated": "2026-10-25T12:54:57.785Z"
   }
 }
