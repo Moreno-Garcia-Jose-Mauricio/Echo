@@ -7,13 +7,14 @@
       "platform": "Netflix",
       "season": 4,
       "episode": 15,
-      "episodeTitle": "Intent",
       "start": "39:50",
       "end": "42:37",
+      "character": "",
+      "quote": "Si alguien más pierde la fe en mi, no importa, pero contigo es diferente.",
       "label": "Maybe un tiempo atrás...",
-      "quote": "",
       "note": "",
-      "createdAt": 1761400000001
+      "createdAt": 1761400000001,
+      "episodeTitle": "Intent"
     },
     {
       "id": "suits-t5e10",
@@ -213,5 +214,10 @@
         18
       ]
     }
+  },
+  "meta": {
+    "app": "1.2",
+    "patch": 1,
+    "updated": "2026-10-25T12:18:42.562Z"
   }
 }
