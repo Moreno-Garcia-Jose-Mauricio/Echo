@@ -126,6 +126,22 @@ svg{width:18px;height:18px;flex:none}
 .ph b{font:800 1.3rem/1 var(--ui);color:var(--accent)}
 .ph span{font-weight:600}
 
+/* full episode map (source view only) */
+.emap{margin-top:26px}
+.mapbox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.mrow{display:grid;grid-template-columns:32px 1fr;gap:6px;align-items:start;padding:6px 0}
+.mrow + .mrow{border-top:1px dashed var(--line)}
+.mrow b{font:600 .74rem var(--mono);color:var(--accent);padding-top:8px;letter-spacing:.04em}
+.mcells{display:flex;flex-wrap:wrap;gap:4px}
+.mc{width:30px;height:30px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--faint);font:500 .7rem var(--mono);padding:0}
+.mc.full{background:color-mix(in srgb,var(--c) 85%,#000);border-color:color-mix(in srgb,var(--c) 70%,#fff 10%);color:#fff;font-weight:600;box-shadow:0 0 12px -4px var(--c)}
+.mc.part{background:color-mix(in srgb,var(--c) 22%,var(--bg));border:1px dashed color-mix(in srgb,var(--c) 60%,var(--line));color:var(--ink)}
+.mc.full.part{border-style:solid}
+.mleg{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font:400 .72rem var(--mono);color:var(--muted)}
+.mleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;border:1px solid var(--line);background:var(--bg)}
+.mleg i.full{background:var(--c);border-color:var(--c)}
+.mleg i.part{background:color-mix(in srgb,var(--c) 22%,var(--bg));border:1px dashed var(--c)}
+
 /* pending */
 .pend{margin-top:22px;background:var(--card);border-radius:18px;overflow:hidden}
 .pend > button{width:100%;border:0;background:none;padding:14px 16px;display:flex;align-items:center;gap:12px;text-align:left}
@@ -355,8 +371,9 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
 
 <script>
 (() => {
-  const APP_VERSION = '2.2';
+  const APP_VERSION = '2.3';
   const CHANGELOG = [
+    ['2.3', 'Mapa completo de temporadas y episodios al final de cada serie: toca un cuadrito vacío para agregar su frase.'],
     ['2.2', 'Tema oscuro de cine: luz de proyector, grano de película, tipografía técnica y acentos ámbar.'],
     ['2.1', 'Inicio por filas: cada serie o persona con sus episodios (T1:E3). Las frases solo se ven al tocarlas; el nombre abre todas.'],
     ['2.0', 'Rediseño completo en una sola pantalla: frase de bienvenida, filtros por tipo y fuente, solo temporadas con frases, y frases de personas (científicos, profesores y tuyas).'],
@@ -552,6 +569,37 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
       });
       feed.appendChild(box);
     }
+    if (src.kind === 'serie') feed.appendChild(episodeMap(src, mine));
+  }
+
+  function episodeMap(src, mine) {
+    const wrap = document.createElement('section'); wrap.className = 'emap'; wrap.style.setProperty('--c', color(src.name));
+    if (!src.seasons) {
+      wrap.innerHTML = `<div class="group"><span>Todas las temporadas</span></div><div class="mapbox"><p class="hint">Agrega cuántos episodios tiene cada temporada para ver el mapa completo.</p><button type="button" class="btn ghost" style="margin-top:10px">Agregar temporadas</button></div>`;
+      wrap.querySelector('button').onclick = () => openEdit(src);
+      return wrap;
+    }
+    const st = {};
+    mine.forEach(c => { const k = `${c.season}-${c.episode}`; const o = st[k] ||= { n: 0, q: 0, first: null, pend: null }; o.n++; if (c.quote) { o.q++; o.first ||= c; } else o.pend ||= c; });
+    let html = `<div class="group"><span>Todas las temporadas</span><span>${src.seasons.reduce((a,b)=>a+b,0)} episodios</span></div><div class="mapbox">`;
+    src.seasons.forEach((n, i) => {
+      const sn = i + 1;
+      html += `<div class="mrow"><b>T${sn}</b><div class="mcells">`;
+      for (let e = 1; e <= n; e++) {
+        const o = st[`${sn}-${e}`], cls = !o ? '' : o.q === o.n ? ' full' : o.q ? ' full part' : ' part';
+        html += `<button type="button" class="mc${cls}" data-s="${sn}" data-e="${e}" aria-label="T${sn}:E${e}${!o ? ', vacío' : o.q ? `, ${o.q} frase${o.q>1?'s':''}` : ', falta la frase'}">${e}</button>`;
+      }
+      html += '</div></div>';
+    });
+    html += `<div class="mleg"><span><i class="full"></i>Con frase</span><span><i class="part"></i>Falta la frase</span><span><i></i>Vacío: toca para agregar</span></div></div>`;
+    wrap.innerHTML = html;
+    wrap.querySelectorAll('.mc').forEach(b => b.onclick = () => {
+      const sn = +b.dataset.s, e = +b.dataset.e, o = st[`${sn}-${e}`];
+      if (o && o.pend && !o.q) return openComposer({ clip: o.pend, focus: 'quote' });
+      if (o && o.q) { const el = document.getElementById('c-' + o.first.id); if (el) { el.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); return; } }
+      openComposer({ preset: { season: sn, episode: e } });
+    });
+    return wrap;
   }
 
   function openQuotes(src, g) {
@@ -685,12 +733,12 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   cf.addEventListener('input', () => { if (C.isNew && C.kind === 'serie') buildComposer(); else updateDest(); });
   $('#kSeg').querySelectorAll('button').forEach(b => b.onclick = () => { if (C.editing) return; C.kind = b.dataset.k; C.src = null; C.isNew = false; C.season = C.episode = null; buildComposer(); });
 
-  function openComposer({ clip, focus } = {}) {
+  function openComposer({ clip, focus, preset } = {}) {
     cf.reset(); C.editing = clip || null;
     if (clip) { C.kind = kindOf(clip); C.src = keyOf(clip.show); C.isNew = false; C.season = clip.season ?? null; C.episode = clip.episode ?? null; }
     else {
       const cur = S.source ? srcBy(S.source) : null;
-      C.kind = cur ? cur.kind : (S.type !== 'all' ? S.type : 'serie'); C.src = cur ? cur.key : null; C.isNew = false; C.season = S.season; C.episode = null;
+      C.kind = cur ? cur.kind : (S.type !== 'all' ? S.type : 'serie'); C.src = cur ? cur.key : null; C.isNew = false; C.season = preset?.season ?? S.season; C.episode = preset?.episode ?? null;
     }
     C.role = '';
     if (clip) {

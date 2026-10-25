@@ -2,6 +2,11 @@
 
 Formato: **mayor.menor.parche**. Los parches (1.2.1, 1.2.2…) son frases guardadas desde la app y quedan en el historial de commits de `echo.json`.
 
+## v2.3
+- Al final de la vista de cada serie: mapa completo de temporadas y episodios (solo ahí, no en el inicio).
+- Cuadrito vacío: abre el editor con temporada y episodio ya elegidos para agregar la frase.
+- Cuadrito tenue (escena sin frase): abre el editor para escribirla. Cuadrito sólido: te lleva a su frase.
+
 ## v2.2
 - Tema oscuro de cine: luz de proyector, grano de película y barras de pantalla panorámica en la portada.
 - Tipografía técnica (monoespaciada) para episodios, minutos, etiquetas y versión; acentos ámbar con brillo.
