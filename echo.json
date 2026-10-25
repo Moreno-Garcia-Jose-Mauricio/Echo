@@ -560,7 +560,7 @@
       "episode": null,
       "start": "",
       "end": "",
-      "quote": "",
+      "quote": "When I was young, I tried to build a paper plane\nBut my head told me \"no\"\nMy parents sat me down and they tried to explain\nThat |had some time to grow\nButlIstayedupall night until got i righ, and in the morning\nI screamed,\"Hey, look! I made it!\"",
       "label": "I Made It",
       "note": "",
       "character": "",
@@ -568,7 +568,7 @@
       "song": "I Made It",
       "year": "2023",
       "createdAt": 1792935687070,
-      "updatedAt": 1792935776464
+      "updatedAt": 1792935990648
     },
     {
       "id": "s-mj-beatit",
@@ -749,7 +749,7 @@
   },
   "meta": {
     "app": "2.4",
-    "patch": 2,
-    "updated": "2026-10-25T13:42:56.464Z"
+    "patch": 3,
+    "updated": "2026-10-25T13:46:31.231Z"
   }
 }
