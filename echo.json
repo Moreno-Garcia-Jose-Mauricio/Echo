@@ -119,13 +119,14 @@
       "platform": "Netflix",
       "season": 3,
       "episode": 10,
-      "episodeTitle": "Man of Honor",
       "start": "40:00",
       "end": "41:00",
+      "character": "Jackson",
+      "quote": "Esto es de la familia West, para recordarte que hay personas que están orgullosas de lo que has logrado.",
       "label": "Familia",
-      "quote": "",
       "note": "",
-      "createdAt": 1761400000008
+      "createdAt": 1761400000008,
+      "episodeTitle": "Man of Honor"
     },
     {
       "id": "house-t2e11",
@@ -223,7 +224,7 @@
   },
   "meta": {
     "app": "1.3",
-    "patch": 6,
-    "updated": "2026-10-25T12:59:12.156Z"
+    "patch": 7,
+    "updated": "2026-10-25T13:03:32.672Z"
   }
 }
