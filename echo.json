@@ -89,8 +89,8 @@
       "episode": 10,
       "start": "43:40",
       "end": "44:30",
-      "character": "Louis",
-      "quote": "Debí decírselo cuando pude, pero es algo con lo que tendré que vivir toda mi vida.",
+      "character": "Donna",
+      "quote": "Lo siento Harvey, tenía que saber.",
       "label": "El beso",
       "note": "",
       "createdAt": 1761400000006,
@@ -222,7 +222,7 @@
   },
   "meta": {
     "app": "1.3",
-    "patch": 4,
-    "updated": "2026-10-25T12:54:57.785Z"
+    "patch": 5,
+    "updated": "2026-10-25T12:56:33.306Z"
   }
 }
