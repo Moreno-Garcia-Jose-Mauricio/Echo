@@ -39,13 +39,14 @@
       "platform": "Netflix",
       "season": 6,
       "episode": 14,
-      "episodeTitle": "Admission of Guilt",
       "start": "38:14",
       "end": "39:27",
+      "character": "Louis",
+      "quote": "Louis:No es nada, yo...tuve un mal día y quería hablarlo, pero mira todo lo que hiciste y no quiero abrumarte.\n\nTara: Louis, mis anuarios siempre van a estar aquí y...escuchar algo que es importante para ti, como tu trabajo, no me abruma; eso nos va a acercar.\n\nLouis: ¿Estás segura?Porque hay muchos días malos en el trabajo.\n\nTara: Todavía más razón para tener una persona que te haga sentir mejor en casa.\n\nLouis: De acuerdo, pero es una larga historia.\n\nTara: Entonces quédate aquí,iré a prepararte un trago y me podrás contar todo.\n\nLouis: ¿Sabes para qué estoy de humor?\n\nTara: Todavía no estoy segura, pero debe ser...\n\nLouis: En serio me empiezas a conocer.\n\nTara: Exactamente",
       "label": "Home",
-      "quote": "",
       "note": "",
-      "createdAt": 1761400000003
+      "createdAt": 1761400000003,
+      "episodeTitle": "Admission of Guilt"
     },
     {
       "id": "suits-t7e6",
@@ -218,7 +219,7 @@
   },
   "meta": {
     "app": "1.2",
-    "patch": 3,
-    "updated": "2026-10-25T12:24:14.686Z"
+    "patch": 4,
+    "updated": "2026-10-25T12:33:24.551Z"
   }
 }
