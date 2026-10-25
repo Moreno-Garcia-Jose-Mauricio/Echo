@@ -4,187 +4,174 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Echo</title>
-<meta name="theme-color" content="#17191E">
+<meta name="theme-color" content="#15171B">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --desk:#E6E7EA; --paper:#FFFFFF; --ink:#16181D; --muted:#646A74; --faint:#9AA0A9; --line:#D9DBDF; --chip:#EEEFF1;
-  --accent:#C8322B; --danger:#B4372F;
+  --bg:#ECEDEF; --card:#FFFFFF; --ink:#15171B; --muted:#62676F; --faint:#9CA1A8; --line:#DCDEE2; --chip:#F0F1F3;
+  --accent:#D2382F; --danger:#B4372F;
   --ui:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --script:"Courier Prime","Courier New",Courier,monospace;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
   color-scheme:light; box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --desk:#17191E; --paper:#212429; --ink:#ECEDEF; --muted:#A2A8B1; --faint:#6E747D; --line:#33373E; --chip:#2A2E34; --accent:#F05A50; --danger:#F07A70; color-scheme:dark;}}
-:root[data-theme="dark"]{--desk:#17191E; --paper:#212429; --ink:#ECEDEF; --muted:#A2A8B1; --faint:#6E747D; --line:#33373E; --chip:#2A2E34; --accent:#F05A50; --danger:#F07A70; color-scheme:dark;}
+  --bg:#15171B; --card:#1F2227; --ink:#EDEEF0; --muted:#A3A8B0; --faint:#6C7179; --line:#30343A; --chip:#292D33; --accent:#F25D53; --danger:#F07A70; color-scheme:dark;}}
+:root[data-theme="dark"]{--bg:#15171B; --card:#1F2227; --ink:#EDEEF0; --muted:#A3A8B0; --faint:#6C7179; --line:#30343A; --chip:#292D33; --accent:#F25D53; --danger:#F07A70; color-scheme:dark;}
 *,*::before,*::after{box-sizing:inherit}
 [hidden]{display:none!important}
-html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);height:100%}
-body{margin:0;background:var(--desk);color:var(--ink);font:400 16px/1.5 var(--ui);-webkit-font-smoothing:antialiased;min-height:100%}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--desk)}
+html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--ui);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--bg)}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 :focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.wrap{max-width:640px;margin:0 auto;padding:12px 16px 140px}
+.wrap{max-width:620px;margin:0 auto;padding:6px 16px 150px}
+svg{width:18px;height:18px;flex:none}
 
-/* header */
-.top{display:flex;align-items:center;gap:10px;padding:8px 0 4px}
-.logo{font:800 2.6rem/1 var(--ui);letter-spacing:-0.05em;margin:0;flex:1}
+/* top */
+.top{display:flex;align-items:center;gap:8px;padding:10px 0 2px}
+.logo{font:800 1.9rem/1 var(--ui);letter-spacing:-0.05em;margin:0;flex:1}
 .logo span{color:var(--accent)}
-.ver{border:0;background:var(--paper);color:var(--muted);font:700 .8rem var(--script);border-radius:999px;padding:7px 11px;box-shadow:0 1px 0 var(--line)}
-.vinfo{background:var(--desk);border-radius:12px;padding:12px 14px;font-size:.88rem;display:grid;gap:4px}
-.vinfo b{font-family:var(--script)}
-.log{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:.86rem}
-.log li{display:grid;grid-template-columns:44px 1fr;gap:8px;color:var(--muted)}
-.log li b{font-family:var(--script);color:var(--ink)}
-.iconbtn{border:0;background:var(--paper);border-radius:14px;width:44px;height:44px;display:grid;place-items:center;color:var(--ink);box-shadow:0 1px 0 var(--line)}
-.iconbtn svg{width:20px;height:20px}
-.search{position:relative;margin:12px 0 4px}
-.search input{width:100%;padding:13px 14px 13px 42px;border:1px solid transparent;border-radius:14px;background:var(--paper);font-size:1rem}
-.search input:focus{border-color:var(--line);outline:none}
-.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--faint)}
-.sync{font-size:.82rem;color:var(--muted);margin:6px 2px 0;min-height:1.2em}
+.pill{border:0;background:var(--card);color:var(--muted);font:600 .78rem var(--ui);border-radius:999px;padding:8px 12px;font-variant-numeric:tabular-nums}
+.iconbtn{border:0;background:var(--card);border-radius:999px;width:40px;height:40px;display:grid;place-items:center;color:var(--ink)}
 
-.h{font:600 1rem var(--ui);margin:28px 2px 10px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.h small{font-weight:400;color:var(--muted);font-size:.85rem}
-.h button{border:0;background:none;color:var(--muted);font-size:.88rem;padding:4px 0;display:inline-flex;gap:6px;align-items:center}
+/* hero */
+.hero{padding:30px 4px 22px}
+.hero blockquote{margin:0;font:italic 400 clamp(1.7rem,7.4vw,2.35rem)/1.15 var(--serif);letter-spacing:-0.015em;text-wrap:balance}
+.hero blockquote::before{content:"“";color:var(--accent)}
+.hero blockquote::after{content:"”";color:var(--accent)}
+.hero p{margin:14px 0 0;font-size:.82rem;color:var(--muted);max-width:44ch;line-height:1.45}
+.counts{display:flex;gap:22px;margin-top:20px}
+.counts div{font:700 1.5rem/1 var(--ui);letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+.counts small{display:block;font:400 .74rem var(--ui);color:var(--muted);margin-top:4px;letter-spacing:0}
 
-/* pending banner */
-.pending{width:100%;margin-top:16px;border:0;border-radius:16px;background:var(--paper);padding:14px 16px;display:flex;align-items:center;gap:14px;text-align:left}
-.pending b{font:700 1.7rem/1 var(--script);color:var(--accent)}
-.pending span{font-size:.95rem;line-height:1.3}
-.pending small{display:block;color:var(--muted);font-size:.82rem}
-.pending i{margin-left:auto;color:var(--faint);font-style:normal;font-size:1.3rem}
+/* controls */
+.sticky{position:sticky;top:env(safe-area-inset-top,0px);z-index:8;background:var(--bg);padding:8px 0 10px;margin:0 -16px;padding-left:16px;padding-right:16px}
+.search{position:relative}
+.search input{width:100%;padding:12px 14px 12px 40px;border:0;border-radius:14px;background:var(--card);font-size:1rem}
+.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--faint)}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--card);border-radius:14px;padding:4px;margin-top:8px}
+.seg button{border:0;background:none;border-radius:10px;padding:8px 4px;font:600 .86rem var(--ui);color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--card)}
+.strip{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:12px -16px 0;padding:0 16px 2px}
+.strip::-webkit-scrollbar{display:none}
+.src{flex:none;display:flex;align-items:center;gap:9px;border:0;background:var(--card);border-radius:14px;padding:7px 12px 7px 7px;text-align:left;max-width:220px}
+.src .sw{width:34px;height:34px;border-radius:10px;background:var(--g);display:grid;place-items:center;color:#fff;font:800 .95rem var(--ui)}
+.src b{display:block;font:600 .9rem/1.15 var(--ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.src small{display:block;font-size:.74rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.src[aria-pressed="true"]{background:var(--ink);color:var(--card)}
+.src[aria-pressed="true"] small{color:inherit;opacity:.7}
 
-/* script page */
-.page{position:relative;background:var(--paper);border-radius:6px 6px 18px 18px;padding:22px 20px 16px;margin-bottom:14px;box-shadow:0 1px 0 var(--line),0 10px 24px -18px rgba(0,0,0,.35)}
-.page::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;border-radius:6px 6px 0 0;background:var(--c)}
-.slug{font:700 .82rem/1.35 var(--script);text-transform:uppercase;letter-spacing:.02em;display:flex;gap:10px;justify-content:space-between;align-items:flex-start}
-.slug .loc{flex:1}
-.slug .loc em{font-style:normal;color:var(--muted);font-weight:400}
-.label{max-width:46%;overflow:hidden;text-overflow:ellipsis;font:600 .76rem var(--ui);background:var(--c);color:#fff;border-radius:999px;padding:3px 10px;white-space:nowrap;text-transform:none;letter-spacing:0}
-.dialogue{margin:16px 0 4px;font:400 1rem/1.6 var(--script);position:relative}
-.dialogue.short{max-width:32ch;margin-left:auto;margin-right:auto;font-size:1.08rem}
-.char{display:block;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
-.short .char,.short .paren{text-align:center}
-.paren{display:block;color:var(--muted);font-style:italic;margin-bottom:6px;font-size:.92rem}
-.line{display:block;text-wrap:pretty;white-space:pre-line}
-.turn{display:grid;gap:1px;padding:8px 0 8px 12px;border-left:2px solid var(--chip)}
-.turn + .turn{margin-top:4px}
-.turn .who{font:700 .74rem var(--script);text-transform:uppercase;letter-spacing:.06em;color:var(--c)}
-.clamp{max-height:11.5em;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 70%,transparent);mask-image:linear-gradient(180deg,#000 70%,transparent)}
-.more{border:0;background:none;color:var(--ink);font:700 .85rem var(--ui);padding:6px 0 0;display:inline-flex;gap:4px;align-items:center;text-decoration:underline;text-underline-offset:3px}
-.missing{display:block;margin:16px 0 4px;border:1.5px dashed var(--line);border-radius:12px;padding:14px;text-align:center;color:var(--muted);font:400 .98rem var(--script);width:100%;background:none}
-.missing strong{color:var(--accent);font-weight:700}
-.foot{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:10px;border-top:1px dashed var(--line)}
-.tc{font:400 .84rem var(--script);color:var(--muted);white-space:nowrap}
-.bar{flex:1;height:4px;border-radius:2px;background:var(--chip);position:relative;overflow:hidden;min-width:40px}
-.bar i{position:absolute;top:0;bottom:0;background:var(--c);border-radius:2px;min-width:4px}
-.mini{border:0;background:var(--chip);border-radius:10px;height:34px;min-width:34px;padding:0 10px;display:inline-grid;place-items:center;color:var(--ink);font-size:.85rem}
+/* source header */
+.srch{border-radius:18px;padding:18px 18px 14px;color:#fff;background:var(--g);margin-top:4px;position:relative;overflow:hidden}
+.srch h2{font:800 clamp(1.9rem,9vw,2.6rem)/0.95 var(--ui);letter-spacing:-0.045em;margin:0 0 6px;padding-right:60px}
+.srch p{margin:0;font-size:.85rem;opacity:.85}
+.srch .edit{position:absolute;top:14px;right:14px;border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:999px;padding:6px 12px;font:600 .8rem var(--ui)}
+.srch .prog{height:4px;border-radius:2px;background:rgba(255,255,255,.25);margin-top:14px;overflow:hidden}
+.srch .prog i{display:block;height:100%;background:#fff}
+.seasons{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-top:10px}
+.seasons::-webkit-scrollbar{display:none}
+.chip{flex:none;border:0;background:var(--card);border-radius:999px;padding:7px 13px;font:600 .84rem var(--ui);font-variant-numeric:tabular-nums}
+.chip small{font-weight:400;color:var(--muted);margin-left:3px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--card)}
+.chip[aria-pressed="true"] small{color:inherit;opacity:.7}
+
+/* feed */
+.group{font:600 .8rem var(--ui);color:var(--muted);margin:22px 4px 8px;display:flex;justify-content:space-between}
+.q{background:var(--card);border-radius:18px;padding:18px 18px 12px;margin-bottom:10px;position:relative;scroll-margin-top:120px}
+.q::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:3px;border-radius:0 3px 3px 0;background:var(--c)}
+.qt{font:400 1.18rem/1.5 var(--serif);text-wrap:pretty;white-space:pre-line}
+.qt.single::before{content:"“"}.qt.single::after{content:"”"}
+.qt.clamp{max-height:9.2em;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 65%,transparent);mask-image:linear-gradient(180deg,#000 65%,transparent)}
+.turn{display:block;white-space:normal}
+.turn + .turn{margin-top:8px}
+.turn .who{display:block;font:700 .7rem var(--ui);text-transform:uppercase;letter-spacing:.08em;color:var(--c);margin-bottom:1px}
+.turn .tx{white-space:pre-line}
+.more{border:0;background:none;padding:6px 0 0;font:600 .84rem var(--ui);color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.by{margin-top:10px;font:italic 400 .98rem var(--serif);color:var(--muted)}
+.paren{font:italic 400 .95rem var(--serif);color:var(--muted);margin:0 0 8px}
+.qf{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid var(--chip)}
+.meta{flex:1;min-width:0;font-size:.8rem;color:var(--muted);line-height:1.35}
+.meta b{color:var(--ink);font-weight:600}
+.meta span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font:600 .72rem var(--ui);border-radius:999px;padding:3px 10px;margin-bottom:10px;background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--ink);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.mini{border:0;background:var(--chip);border-radius:999px;width:34px;height:34px;display:grid;place-items:center;color:var(--ink);flex:none}
 .mini svg{width:16px;height:16px}
+.q.flash{animation:fl 1.1s ease}
+@keyframes fl{0%{box-shadow:0 0 0 3px var(--c)}100%{box-shadow:none}}
 
-/* feature: tonight's screening */
-.feature .dialogue.short{font-size:1.2rem;max-width:28ch}
-.feature .show{font:800 1.05rem var(--ui);letter-spacing:-0.01em;text-transform:none}
+/* pending */
+.pend{margin-top:22px;background:var(--card);border-radius:18px;overflow:hidden}
+.pend > button{width:100%;border:0;background:none;padding:14px 16px;display:flex;align-items:center;gap:12px;text-align:left}
+.pend > button b{font:800 1.35rem/1 var(--ui);color:var(--accent);font-variant-numeric:tabular-nums}
+.pend > button span{flex:1;font-weight:600}
+.pend > button small{display:block;font-weight:400;color:var(--muted);font-size:.8rem}
+.pend > button i{font-style:normal;color:var(--faint);transition:transform .2s}
+.pend[open-state="true"] > button i{transform:rotate(90deg)}
+.prow{display:flex;align-items:center;gap:10px;width:100%;border:0;border-top:1px solid var(--chip);background:none;padding:12px 16px;text-align:left}
+.prow .d{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}
+.prow span{flex:1;min-width:0;font-size:.9rem}
+.prow span small{display:block;color:var(--muted);font-size:.78rem;font-variant-numeric:tabular-nums}
+.prow em{font-style:normal;font-size:.8rem;color:var(--ink);font-weight:600;white-space:nowrap}
+.empty{text-align:center;color:var(--muted);padding:36px 16px}
+.empty b{display:block;font:italic 400 1.3rem var(--serif);color:var(--ink);margin-bottom:6px}
+.foot{display:flex;justify-content:center;gap:18px;margin-top:34px;font-size:.84rem}
+.foot button{border:0;background:none;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:0}
+.sync{font-size:.8rem;color:var(--muted);margin:6px 4px 0;min-height:1.1em}
 
-/* posters */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
-.poster{position:relative;aspect-ratio:2/3;border:0;border-radius:14px;padding:14px;text-align:left;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--g)}
-.poster::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.45)),repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
-.poster .n{position:absolute;top:10px;right:12px;font:700 .8rem var(--script);background:rgba(0,0,0,.28);padding:3px 8px;border-radius:999px}
-.poster .prog{position:absolute;left:14px;right:14px;bottom:8px;height:3px;border-radius:2px;background:rgba(255,255,255,.25);overflow:hidden}
-.poster .prog i{display:block;height:100%;background:#fff;border-radius:2px}
-.poster .m{margin-bottom:6px}
-.poster .t{position:relative;font:800 1.6rem/0.95 var(--ui);letter-spacing:-0.04em;text-wrap:balance}
-.poster .m{position:relative;font-size:.8rem;opacity:.85;margin-top:6px}
-.poster.add{background:none;border:2px dashed var(--line);color:var(--muted);align-items:center;justify-content:center;text-align:center;font-weight:600}
-.poster.add::before{display:none}
-.poster.add span{font-size:2rem;line-height:1;font-weight:400}
-
-/* series */
-.bar-top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--desk);padding:8px 0;display:flex;gap:8px;align-items:center}
-.back{border:0;background:var(--paper);border-radius:999px;padding:9px 16px 9px 12px;font-weight:600;display:inline-flex;gap:4px;align-items:center}
-.back svg{width:18px;height:18px}
-.hero{border-radius:20px;padding:26px 20px 20px;color:#fff;position:relative;overflow:hidden;background:var(--g)}
-.hero::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
-.hero h2{position:relative;font:800 clamp(2.4rem,12vw,3.8rem)/0.9 var(--ui);letter-spacing:-0.05em;margin:0 0 10px}
-.hero p{position:relative;margin:0;opacity:.88;font-size:.9rem}
-.hero .edit{position:absolute;top:14px;right:14px;border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:999px;padding:6px 14px;font-size:.84rem;font-weight:600}
-.stats{position:relative;display:flex;gap:18px;margin-top:16px}
-.stats div{font:700 1.4rem/1 var(--script)}
-.stats small{display:block;font:400 .74rem var(--ui);opacity:.8;margin-top:4px}
-
-.map{background:var(--paper);border-radius:16px;padding:14px}
-.srow{display:grid;grid-template-columns:30px 1fr;gap:6px;align-items:start;padding:5px 0}
-.srow + .srow{border-top:1px solid var(--chip)}
-.srow b{font:700 .8rem var(--script);color:var(--muted);padding-top:7px}
-.cells{display:flex;flex-wrap:wrap;gap:4px}
-.cell{width:30px;height:30px;border-radius:8px;border:0;background:var(--chip);color:var(--muted);font:400 .72rem var(--script);padding:0}
-.cell.on{background:var(--c);color:#fff;font-weight:700}
-.cell.on.part{background:color-mix(in srgb,var(--c) 26%,var(--paper));color:var(--ink);font-weight:600}
-.cell.sel{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink);font-weight:700}
-.legend{display:flex;gap:14px;font-size:.78rem;color:var(--muted);margin:10px 0 0;flex-wrap:wrap}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-.season-h{font:700 .82rem var(--script);text-transform:uppercase;color:var(--muted);margin:24px 2px 10px;letter-spacing:.04em}
-.empty{color:var(--muted);text-align:center;padding:30px 10px}
-
-/* FAB */
-.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));border:0;background:var(--ink);color:var(--desk);padding:16px 26px;border-radius:999px;font-weight:600;font-size:1rem;box-shadow:0 10px 28px rgba(0,0,0,.28);display:inline-flex;gap:8px;align-items:center;white-space:nowrap;z-index:6}
-.fab svg{width:18px;height:18px}
+.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));border:0;background:var(--ink);color:var(--card);padding:16px 26px;border-radius:999px;font:600 1rem var(--ui);box-shadow:0 10px 28px rgba(0,0,0,.28);display:inline-flex;gap:8px;align-items:center;white-space:nowrap;z-index:9}
 
 /* sheets */
-dialog{border:0;padding:0;border-radius:24px 24px 0 0;width:100%;max-width:640px;margin:auto auto 0;background:var(--paper);color:var(--ink);max-height:94dvh}
+dialog{border:0;padding:0;border-radius:24px 24px 0 0;width:100%;max-width:620px;margin:auto auto 0;background:var(--card);color:var(--ink);max-height:94dvh}
 dialog::backdrop{background:rgba(10,12,16,.55)}
 @media (min-width:700px){dialog{border-radius:24px;margin:auto}}
 .sheet{display:flex;flex-direction:column;max-height:94dvh}
-.sheet-head{padding:10px 18px 6px;position:relative}
-.sheet-head::before{content:"";display:block;width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 12px}
-.sheet-head h3{font:800 1.45rem/1.05 var(--ui);margin:0;letter-spacing:-0.03em;display:flex;align-items:center;gap:10px}
-.sheet-head h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c);flex:none}
-.sheet-body{padding:8px 18px 12px;overflow-y:auto;display:grid;gap:16px}
-.sheet-foot{padding:12px 18px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);display:grid;gap:10px;background:var(--paper)}
-.field{display:grid;gap:6px}
-.field > span{font-size:.84rem;font-weight:600}
-.field > span em{font-weight:400;color:var(--muted);font-style:normal}
-.field input,.field textarea,.field select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:var(--desk);font-size:1rem}
-.field textarea{min-height:110px;resize:vertical;font:400 1.05rem/1.5 var(--script)}
-.field .tcin{font-family:var(--script);font-size:1.1rem;letter-spacing:.02em}
+.sh{padding:10px 18px 4px}
+.sh::before{content:"";display:block;width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 12px}
+.sh h3{font:800 1.4rem/1.05 var(--ui);margin:0;letter-spacing:-0.03em}
+.sb{padding:10px 18px 14px;overflow-y:auto;display:grid;gap:16px}
+.sf{padding:12px 18px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);display:grid;gap:10px}
+.fl{display:grid;gap:6px}
+.fl > span{font-size:.82rem;font-weight:600}
+.fl > span em{font-weight:400;color:var(--muted);font-style:normal}
+.fl input,.fl textarea,.fl select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:1rem}
+.fl textarea{min-height:120px;resize:vertical;font:400 1.1rem/1.5 var(--serif)}
 .hint{font-size:.78rem;color:var(--muted);margin:0}
-.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;border:0;background:var(--chip);border-radius:10px;padding:9px 14px;font:700 .9rem var(--script)}
-.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.kseg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--bg);border-radius:14px;padding:4px}
+.kseg button{border:0;background:none;border-radius:10px;padding:10px 4px;font:600 .9rem var(--ui);color:var(--muted)}
+.kseg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.wrapchips{display:flex;flex-wrap:wrap;gap:6px}
+.wrapchips .chip,.rowchips .chip{background:var(--bg)}
+.wrapchips .chip[aria-pressed="true"],.rowchips .chip[aria-pressed="true"]{background:var(--ink);color:var(--card)}
+.rowchips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.rowchips::-webkit-scrollbar{display:none}
+.chip.new{background:none!important;border:1.5px dashed var(--line);color:var(--muted)}
+.chip.new[aria-pressed="true"]{color:var(--ink)!important;border-color:var(--ink)}
 .epgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px}
-.ep{border:0;background:var(--chip);border-radius:10px;height:40px;font:400 .9rem var(--script);position:relative}
+.ep{border:0;background:var(--bg);border-radius:10px;height:40px;font:500 .9rem var(--ui);position:relative;font-variant-numeric:tabular-nums}
 .ep.has::after{content:"";position:absolute;top:5px;right:5px;width:6px;height:6px;border-radius:50%;background:var(--c)}
-.ep[aria-pressed="true"]{background:var(--ink);color:var(--paper);font-weight:700}
+.ep[aria-pressed="true"]{background:var(--ink);color:var(--card);font-weight:700}
+.box{background:var(--bg);border-radius:14px;padding:12px;display:grid;gap:12px}
+.box .fl input{background:var(--card)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.dest{font-size:.88rem;margin:0;display:flex;gap:8px;align-items:center}
-.dest.warn{color:var(--danger)}
+.dest{font-size:.86rem;margin:0;display:flex;gap:8px;align-items:center}
 .dest::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
-.row-actions{display:flex;gap:8px;align-items:center}
-.btn{border:0;padding:14px 18px;border-radius:14px;font-weight:600;font-size:1rem}
-.primary{background:var(--ink);color:var(--paper);flex:1}
+.dest.warn{color:var(--danger)}
+.acts{display:flex;gap:8px;align-items:center}
+.btn{border:0;padding:14px 18px;border-radius:14px;font:600 1rem var(--ui)}
+.primary{background:var(--ink);color:var(--card);flex:1}
 .ghost{background:var(--chip)}
 .del{background:none;color:var(--danger);padding-left:4px;padding-right:4px}
-.picklist{display:grid;gap:8px}
-.pick{border:0;border-radius:14px;padding:16px;color:#fff;text-align:left;font:800 1.2rem var(--ui);letter-spacing:-0.02em;background:var(--g);display:flex;align-items:center}
-.pick small{font:400 .8rem var(--ui);opacity:.85;margin-left:auto}
-.pick.plain{background:var(--chip);color:var(--ink)}
-
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:10px 10px 10px 16px;border-radius:14px;display:flex;gap:12px;align-items:center;z-index:30;max-width:92vw;box-shadow:0 8px 22px rgba(0,0,0,.25);font-size:.92rem}
-.toast[hidden]{display:none}
+.vinfo{background:var(--bg);border-radius:12px;padding:12px 14px;font-size:.88rem;display:grid;gap:4px}
+.log{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:.85rem}
+.log li{display:grid;grid-template-columns:42px 1fr;gap:8px;color:var(--muted)}
+.log li b{color:var(--ink)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--card);padding:10px 10px 10px 16px;border-radius:14px;display:flex;gap:12px;align-items:center;z-index:40;max-width:92vw;box-shadow:0 8px 22px rgba(0,0,0,.25);font-size:.9rem}
 .toast button{border:0;background:rgba(127,127,127,.3);color:inherit;border-radius:10px;padding:7px 12px;font-weight:600}
-.tools{display:flex;gap:18px;justify-content:center;margin-top:36px;font-size:.85rem}
-.tools button{background:none;border:0;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:0}
-@media (prefers-reduced-motion:no-preference){
-  .page.flash{animation:flash 1.1s ease}
-  @keyframes flash{0%{box-shadow:0 0 0 3px var(--c)}100%{box-shadow:0 1px 0 var(--line)}}
-}
 </style>
 </head>
 <body>
@@ -192,112 +179,110 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
 <button class="fab" id="fab" type="button"></button>
 <div class="toast" id="toast" role="status" hidden><span></span><button type="button">Deshacer</button></div>
 
-<dialog id="pickDlg"><div class="sheet">
-  <div class="sheet-head"><h3>¿De qué serie o película?</h3></div>
-  <div class="sheet-body"><div class="picklist" id="pickList"></div></div>
-  <div class="sheet-foot"><button type="button" class="btn ghost" data-close>Cancelar</button></div>
-</div></dialog>
-
-<dialog id="seriesDlg"><form class="sheet" id="seriesForm">
-  <div class="sheet-head"><h3 id="seriesTitle">Nueva serie o película</h3></div>
-  <div class="sheet-body">
-    <label class="field"><span>Título</span><input name="name" required autocomplete="off" placeholder="Breaking Bad"></label>
-    <div class="two">
-      <label class="field"><span>Tipo</span><select name="kind"><option value="serie">Serie</option><option value="pelicula">Película</option></select></label>
-      <label class="field"><span>Plataforma</span><input name="platform" list="platList" placeholder="Netflix">
-        <datalist id="platList"><option>Netflix</option><option>Prime Video</option><option>Disney+</option><option>Max</option><option>Apple TV+</option><option>Cine</option></datalist></label>
+<dialog id="cDlg"><form class="sheet" id="cForm" novalidate>
+  <div class="sh"><h3 id="cTitle">Nueva frase</h3></div>
+  <div class="sb">
+    <div class="kseg" id="kSeg" role="group" aria-label="Tipo de fuente">
+      <button type="button" data-k="serie">Serie</button><button type="button" data-k="pelicula">Película</button><button type="button" data-k="persona">Persona</button>
     </div>
-    <label class="field" id="seasonsField"><span>Episodios por temporada</span><input name="seasons" placeholder="12, 16, 16, 16" inputmode="numeric">
-      <p class="hint">Un número por temporada, separados por comas. Puedes copiarlos de la ficha de la serie.</p></label>
+    <div class="fl"><span id="srcLbl">¿De cuál?</span><div class="wrapchips" id="srcChips"></div></div>
+    <div class="box" id="newSrc" hidden>
+      <label class="fl"><span id="nsNameLbl">Nombre</span><input name="nsName" autocomplete="off"></label>
+      <div class="fl" id="nsRoleF"><span>¿Quién es?</span><div class="wrapchips" id="nsRoles"></div></div>
+      <label class="fl" id="nsPlatF"><span>Plataforma <em>(opcional)</em></span><input name="nsPlat" list="platList" placeholder="Netflix">
+        <datalist id="platList"><option>Netflix</option><option>Prime Video</option><option>Disney+</option><option>Max</option><option>Apple TV+</option><option>Cine</option></datalist></label>
+      <label class="fl" id="nsSeasF"><span>Episodios por temporada <em>(opcional)</em></span><input name="nsSeasons" inputmode="numeric" placeholder="12, 16, 16"><p class="hint">Un número por temporada, separado por comas. Te deja elegir el episodio con un toque.</p></label>
+    </div>
+    <div class="fl" id="seasF"><span>Temporada</span><div class="rowchips" id="seasChips"></div></div>
+    <div class="fl" id="epF"><span>Episodio <em id="epHint"></em></span><div class="epgrid" id="epGrid"></div></div>
+    <div class="two" id="manF"><label class="fl"><span>Temporada</span><input name="mS" type="number" min="1" inputmode="numeric"></label><label class="fl"><span>Episodio</span><input name="mE" type="number" min="1" inputmode="numeric"></label></div>
+    <label class="fl" id="tcF"><span>Minuto</span><input name="tc" placeholder="39:50-42:37" autocomplete="off" inputmode="text"><p class="hint">Inicio y fin, como lo anotas. El fin es opcional.</p></label>
+    <label class="fl"><span>La frase</span><textarea name="quote" placeholder="Escríbela tal cual. Para un diálogo: Mike: … (una línea por persona)"></textarea></label>
+    <label class="fl" id="whoF"><span>Quién lo dice <em>(opcional)</em></span><input name="who" list="whoList" autocomplete="off" placeholder="Harvey"><datalist id="whoList"></datalist></label>
+    <label class="fl" id="ctxF"><span>Dónde o cuándo <em>(opcional)</em></span><input name="ctx" autocomplete="off" placeholder="Clase de Modelado, 2025"></label>
+    <div class="two">
+      <label class="fl"><span>Etiqueta <em>(opcional)</em></span><input name="label" autocomplete="off" placeholder="Lealtad"></label>
+      <label class="fl"><span>Nota <em>(opcional)</em></span><input name="note" autocomplete="off" placeholder="Contexto"></label>
+    </div>
   </div>
-  <div class="sheet-foot"><div class="row-actions"><button type="button" class="btn ghost" data-close>Cancelar</button><button type="submit" class="btn primary">Guardar</button></div></div>
+  <div class="sf">
+    <p class="dest" id="dest"></p>
+    <div class="acts"><button type="button" class="btn del" id="delBtn" hidden>Eliminar</button><button type="button" class="btn ghost" data-close>Cancelar</button><button type="submit" class="btn primary" id="saveBtn">Guardar</button></div>
+  </div>
 </form></dialog>
 
-<dialog id="settingsDlg"><form class="sheet" id="settingsForm">
-  <div class="sheet-head"><h3>Ajustes</h3></div>
-  <div class="sheet-body">
-    <p class="hint" style="font-size:.9rem">Repo: <b id="stRepo"></b></p>
-    <label class="field"><span>Token</span><input name="token" type="password" autocomplete="off" placeholder="github_pat_…"></label>
+<dialog id="eDlg"><form class="sheet" id="eForm" novalidate>
+  <div class="sh"><h3 id="eTitle">Editar</h3></div>
+  <div class="sb">
+    <label class="fl"><span>Nombre</span><input name="name" autocomplete="off"></label>
+    <div class="fl" id="eRoleF"><span>¿Quién es?</span><div class="wrapchips" id="eRoles"></div></div>
+    <label class="fl" id="ePlatF"><span>Plataforma</span><input name="plat" list="platList"></label>
+    <label class="fl" id="eSeasF"><span>Episodios por temporada</span><input name="seasons" inputmode="numeric" placeholder="12, 16, 16"><p class="hint">Un número por temporada, separado por comas.</p></label>
+  </div>
+  <div class="sf"><div class="acts"><button type="button" class="btn ghost" data-close>Cancelar</button><button type="submit" class="btn primary">Guardar</button></div></div>
+</form></dialog>
+
+<dialog id="sDlg"><form class="sheet" id="sForm">
+  <div class="sh"><h3>Ajustes</h3></div>
+  <div class="sb">
+    <p class="hint" style="font-size:.88rem">Repo: <b id="stRepo"></b></p>
+    <label class="fl"><span>Token de GitHub</span><input name="token" type="password" autocomplete="off" placeholder="github_pat_…"></label>
     <p class="hint">Fine-grained token con acceso solo a este repo y permiso <b>Contents: Read and write</b>. Se guarda únicamente en este dispositivo.</p>
     <p class="dest" id="stMsg"></p>
-    <div class="field"><span>Versión</span><div class="vinfo" id="vInfo"></div></div>
-    <div class="field"><span>Novedades de la app</span><ul class="log" id="vLog"></ul></div>
+    <div class="fl"><span>Versión</span><div class="vinfo" id="vInfo"></div></div>
+    <div class="fl"><span>Novedades</span><ul class="log" id="vLog"></ul></div>
+    <button type="button" class="btn ghost" id="exportBtn">Descargar respaldo</button>
   </div>
-  <div class="sheet-foot"><div class="row-actions"><button type="button" class="btn del" id="clearToken">Quitar</button><button type="button" class="btn ghost" data-close>Cancelar</button><button type="submit" class="btn primary">Conectar</button></div></div>
-</form></dialog>
-
-<dialog id="clipDlg"><form class="sheet" id="clipForm" novalidate>
-  <div class="sheet-head"><h3><span class="dot" id="clipDot"></span><span id="clipTitle"></span></h3></div>
-  <div class="sheet-body">
-    <div class="field" id="seasonField"><span>Temporada</span><div class="chips" id="seasonChips" role="group" aria-label="Temporada"></div></div>
-    <div class="field" id="epField"><span>Episodio <em id="epHint"></em></span><div class="epgrid" id="epGrid" role="group" aria-label="Episodio"></div></div>
-    <div class="two" id="manualEp" hidden>
-      <label class="field"><span>Temporada</span><input name="mseason" type="number" min="1" inputmode="numeric"></label>
-      <label class="field"><span>Episodio</span><input name="mepisode" type="number" min="1" inputmode="numeric"></label>
-    </div>
-    <label class="field"><span>Minuto</span><input name="tc" class="tcin" placeholder="39:50 - 42:37" inputmode="text" autocomplete="off">
-      <p class="hint">Inicio y fin, como lo anotas: 39:50-42:37. El fin es opcional.</p></label>
-    <label class="field"><span>Quién lo dice <em>(opcional)</em></span><input name="character" list="charList" autocomplete="off" placeholder="Harvey"><datalist id="charList"></datalist></label>
-    <label class="field"><span>La frase</span><textarea name="quote" placeholder="Escribe el diálogo tal como lo dicen…"></textarea></label>
-    <label class="field"><span>Etiqueta</span><input name="label" placeholder="Lealtad" autocomplete="off"></label>
-    <label class="field"><span>Nota <em>(opcional)</em></span><input name="note" placeholder="Por qué te gusta, el contexto…"></label>
-  </div>
-  <div class="sheet-foot">
-    <p class="dest" id="dest"></p>
-    <div class="row-actions"><button type="button" class="btn del" id="delBtn" hidden>Eliminar</button><button type="button" class="btn ghost" data-close>Cancelar</button><button type="submit" class="btn primary">Guardar escena</button></div>
-  </div>
+  <div class="sf"><div class="acts"><button type="button" class="btn del" id="clearToken">Quitar token</button><button type="button" class="btn ghost" data-close>Cerrar</button><button type="submit" class="btn primary">Conectar</button></div></div>
 </form></dialog>
 
 <script>
 (() => {
-  const $ = s => document.querySelector(s);
-  const APP_VERSION = '1.3';
+  const APP_VERSION = '2.0';
   const CHANGELOG = [
-    ['1.3', 'Frases largas y diálogos entre personajes más legibles, mapa con episodios tenues hasta tener frase y contador de frases en la cartelera.'],
-    ['1.2', 'Versiones visibles: cada frase guardada sube el último número (1.2.1, 1.2.2…).'],
-    ['1.1', 'Rediseño: escenas en formato guion, pendientes, selector de episodios con botones y compartir.'],
-    ['1.0', 'Primera versión en GitHub: escenas, mapa de episodios y guardado con commits.']
+    ['2.0', 'Rediseño completo en una sola pantalla: frase de bienvenida, filtros por tipo y fuente, solo temporadas con frases, y frases de personas (científicos, profesores y tuyas).'],
+    ['1.3', 'Frases largas y diálogos legibles, mapa tenue/sólido y contador de frases en la cartelera.'],
+    ['1.2', 'Versiones visibles: cada frase guardada sube el último número.'],
+    ['1.1', 'Rediseño en formato guion, pendientes, selector de episodios y compartir.'],
+    ['1.0', 'Primera versión en GitHub con guardado por commits.']
   ];
-  const S = { meta: null, clips: [], catalog: {}, view: 'home', current: null, q: '', sel: null, pendingOnly: false, editing: null, ctx: null, pick: { season: null, episode: null }, feature: null, syncMsg: '' };
-  const ICON = {
+  const ROLES = ['Científico', 'Profesor', 'Mía', 'Otra'];
+  const $ = s => document.querySelector(s);
+  const S = { meta: null, clips: [], catalog: {}, type: 'all', source: null, season: null, q: '', pendOpen: false, syncMsg: '' };
+  const I = {
     search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
     gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>',
     plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
-    back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>',
     edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
-    share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="m16 6-4-4-4 4"/><path d="M12 2v13"/></svg>',
-    shuffle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="m15 15 6 6"/><path d="M4 4l5 5"/></svg>'
+    share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="m16 6-4-4-4 4"/><path d="M12 2v13"/></svg>'
   };
 
   // ---------- helpers ----------
   const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   const toSec = t => { if (!t) return null; const p = String(t).trim().split(':').map(Number); return p.some(isNaN) ? null : p.reduce((a,b)=>a*60+b,0); };
-  const fmt = s => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
   const okT = v => /^\d{1,2}(:[0-5]\d){1,2}$/.test(v);
-  const parseTC = v => { const parts = String(v).replace(/[–—]/g,'-').split(/\s*-\s*|\s+a\s+/).map(x=>x.trim()).filter(Boolean); return { start: parts[0] || '', end: parts[1] || '' }; };
-  const hue = name => { let h = 7; for (const ch of name.toLowerCase()) h = (h*31 + ch.charCodeAt(0)) % 360; return h; };
-  const color = name => `hsl(${hue(name)} 55% 42%)`;
-  const grad = name => { const h = hue(name); return `linear-gradient(160deg,hsl(${h} 60% 42%),hsl(${(h+30)%360} 65% 18%))`; };
-  const keyOf = n => n.trim().toLowerCase();
+  const parseTC = v => { const p = String(v).replace(/[–—]/g,'-').split(/\s*-\s*/).map(x=>x.trim()).filter(Boolean); return { start: p[0] || '', end: p[1] || '' }; };
+  const hue = n => { let h = 7; for (const ch of n.toLowerCase()) h = (h*31 + ch.charCodeAt(0)) % 360; return h; };
+  const color = n => `hsl(${hue(n)} 55% 44%)`;
+  const grad = n => { const h = hue(n); return `linear-gradient(150deg,hsl(${h} 60% 44%),hsl(${(h+32)%360} 65% 20%))`; };
+  const keyOf = n => String(n).trim().toLowerCase();
   const plural = (n, a, b) => `${n} ${n===1?a:b}`;
+  const initials = n => n.split(/\s+/).filter(Boolean).slice(0,2).map(w => w[0]).join('').toUpperCase();
+  const kindName = k => ({ serie: 'Serie', pelicula: 'Película', persona: 'Persona' }[k] || 'Serie');
 
   // ---------- storage: GitHub ----------
-  const CFG = (() => {
-    const m = location.hostname.match(/^([^.]+)\.github\.io$/);
-    const first = location.pathname.split('/').filter(Boolean)[0];
-    return { owner: m ? m[1] : 'Moreno-Garcia-Jose-Mauricio', repo: m && first ? first : 'Echo', path: 'echo.json', branch: 'main' };
-  })();
+  const CFG = (() => { const m = location.hostname.match(/^([^.]+)\.github\.io$/); const first = location.pathname.split('/').filter(Boolean)[0];
+    return { owner: m ? m[1] : 'Moreno-Garcia-Jose-Mauricio', repo: m && first ? first : 'Echo', path: 'echo.json', branch: 'main' }; })();
   const API = `https://api.github.com/repos/${CFG.owner}/${CFG.repo}/contents/${CFG.path}`;
   const TK = 'echo.token', LS = 'echo.cache';
   const getToken = () => { try { return localStorage.getItem(TK) || ''; } catch { return ''; } };
   const setToken = t => { try { t ? localStorage.setItem(TK, t) : localStorage.removeItem(TK); } catch {} };
   const b64d = s => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\s/g, '')), c => c.charCodeAt(0)));
   const b64e = s => { let bin = ''; new TextEncoder().encode(s).forEach(x => bin += String.fromCharCode(x)); return btoa(bin); };
-  const gh = (t, extra = {}) => ({ Authorization: 'Bearer ' + t, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...extra });
+  const gh = (t, x = {}) => ({ Authorization: 'Bearer ' + t, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...x });
   function applyData(d) { S.meta = d.meta || null; S.clips = Array.isArray(d.clips) ? d.clips.slice() : []; S.catalog = d.catalog ? JSON.parse(JSON.stringify(d.catalog)) : {}; }
   const lsLoad = () => { try { const d = JSON.parse(localStorage.getItem(LS)); if (d) applyData(d); } catch {} };
-  const lsSave = () => { try { localStorage.setItem(LS, JSON.stringify({ clips: S.clips, catalog: S.catalog })); } catch {} };
-
+  const lsSave = () => { try { localStorage.setItem(LS, JSON.stringify({ meta: S.meta, clips: S.clips, catalog: S.catalog })); } catch {} };
   async function fetchRemote() {
     const t = getToken();
     if (t) {
@@ -305,8 +290,7 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
       if (r.status === 401 || r.status === 403) throw new Error('token');
       if (r.status === 404) return { data: { clips: [], catalog: {} }, sha: undefined };
       if (!r.ok) throw new Error('http');
-      const j = await r.json();
-      return { data: JSON.parse(b64d(j.content)), sha: j.sha };
+      const j = await r.json(); return { data: JSON.parse(b64d(j.content)), sha: j.sha };
     }
     const r = await fetch(`${CFG.path}?t=${Date.now()}`, { cache: 'no-store' });
     if (!r.ok) throw new Error('http');
@@ -314,9 +298,9 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
   }
   async function commit(mutate, message) {
     const t = getToken();
-    if (!t) { openSettings('Para guardar cambios conecta tu token de GitHub.'); throw new Error('notoken'); }
+    if (!t) { openSettings('Para guardar conecta tu token de GitHub.'); throw new Error('notoken'); }
     setSync('Guardando en GitHub…');
-    for (let attempt = 0; attempt < 3; attempt++) {
+    for (let i = 0; i < 3; i++) {
       const { data, sha } = await fetchRemote();
       data.clips ||= []; data.catalog ||= {};
       mutate(data);
@@ -325,16 +309,15 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
       const body = { message: `v${APP_VERSION}.${m.patch}: ${message}`, content: b64e(JSON.stringify(data, null, 2) + '\n'), branch: CFG.branch };
       if (sha) body.sha = sha;
       const r = await fetch(API, { method: 'PUT', headers: gh(t, { 'Content-Type': 'application/json' }), body: JSON.stringify(body) });
-      if (r.ok) { applyData(data); lsSave(); render(); setSync(`Guardado en GitHub como v${versionStr()}`); setTimeout(() => S.syncMsg.startsWith('Guardado en GitHub') && setSync(''), 4000); return; }
+      if (r.ok) { applyData(data); lsSave(); render(); setSync(`Guardado como v${versionStr()}`); setTimeout(() => S.syncMsg.startsWith('Guardado') && setSync(''), 4000); return; }
       if (r.status === 401 || r.status === 403) { setSync('Tu token no tiene permiso para escribir. Revísalo en ajustes.'); throw new Error('token'); }
       if (r.status !== 409 && r.status !== 422) break;
     }
-    setSync('No se pudo guardar. Revisa tu conexión.');
-    throw new Error('save');
+    setSync('No se pudo guardar. Revisa tu conexión.'); throw new Error('save');
   }
-  const describe = c => `${c.show}${c.kind === 'pelicula' ? '' : ` T${c.season}E${c.episode}`}, ${c.label}`;
-  const saveClip = c => { const isNew = !S.clips.some(x => x.id === c.id); return commit(d => { const i = d.clips.findIndex(x => x.id === c.id); i >= 0 ? d.clips[i] = c : d.clips.push(c); }, `${isNew ? 'Agrega' : 'Actualiza'} escena: ${describe(c)}`); };
-  const removeClip = id => { const c = S.clips.find(x => x.id === id); return commit(d => { d.clips = d.clips.filter(x => x.id !== id); }, `Elimina escena: ${c ? describe(c) : id}`); };
+  const describe = c => `${c.show}${c.kind === 'serie' ? ` T${c.season}E${c.episode}` : ''}, ${c.label}`;
+  const upsert = (d, c) => { const i = d.clips.findIndex(x => x.id === c.id); i >= 0 ? d.clips[i] = c : d.clips.push(c); };
+  const removeClip = id => { const c = S.clips.find(x => x.id === id); return commit(d => { d.clips = d.clips.filter(x => x.id !== id); }, `Elimina frase: ${c ? describe(c) : id}`); };
   async function refresh() {
     try { const { data } = await fetchRemote(); applyData(data); lsSave(); render(); setSync(getToken() ? '' : 'Solo lectura. Conecta tu token en ajustes para guardar.'); }
     catch (e) { setSync(e.message === 'token' ? 'Tu token no funciona. Revísalo en ajustes.' : 'Sin conexión. Mostrando la última copia guardada.'); }
@@ -343,169 +326,93 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
   function setSync(t) { S.syncMsg = t; const el = $('#sync'); if (el) el.textContent = t; }
 
   // ---------- model ----------
-  function allSeries() {
+  function sources() {
     const map = {};
-    Object.values(S.catalog).forEach(s => map[keyOf(s.name)] = { ...s });
-    S.clips.forEach(c => { const k = keyOf(c.show); if (!map[k]) map[k] = { name: c.show, kind: c.kind || 'serie', platform: c.platform || '', seasons: null }; });
-    return Object.values(map).sort((a,b) => a.name.localeCompare(b.name,'es'));
+    Object.values(S.catalog).forEach(s => map[keyOf(s.name)] = { ...s, kind: s.kind || 'serie' });
+    S.clips.forEach(c => { const k = keyOf(c.show); if (!map[k]) map[k] = { name: c.show, kind: c.kind || 'serie', platform: c.platform || '', seasons: null, role: c.role || '' }; });
+    return Object.values(map).map(s => { const cs = S.clips.filter(c => keyOf(c.show) === keyOf(s.name)); return { ...s, key: keyOf(s.name), total: cs.length, done: cs.filter(c => c.quote).length, last: Math.max(0, ...cs.map(c => c.updatedAt || c.createdAt || 0)) }; })
+      .sort((a,b) => b.last - a.last || a.name.localeCompare(b.name,'es'));
   }
-  const seriesBy = name => allSeries().find(s => keyOf(s.name) === keyOf(name));
+  const srcBy = k => sources().find(s => s.key === k);
   const order = (a,b) => (a.season||0)-(b.season||0)||(a.episode||0)-(b.episode||0)||(toSec(a.start)||0)-(toSec(b.start)||0);
-  const clipsOf = name => S.clips.filter(c => keyOf(c.show) === keyOf(name)).sort(order);
-  const pending = () => S.clips.filter(c => !c.quote);
+  const subtitle = s => s.kind === 'persona' ? (s.role || 'Persona') : s.kind === 'pelicula' ? `Película${s.platform ? ', ' + s.platform : ''}` : `Serie${s.platform ? ', ' + s.platform : ''}`;
+  const kindOf = c => c.kind || 'serie';
 
   // ---------- render ----------
   function render() {
-    const app = $('#app');
-    if (S.view === 'series' && S.current && seriesBy(S.current)) renderSeries(app);
-    else { S.view = 'home'; renderHome(app); }
-    updateFab();
-  }
-
-  function pickFeature() {
-    const withQ = S.clips.filter(c => c.quote);
-    const pool = withQ.length ? withQ : S.clips;
-    if (!pool.length) return null;
-    if (S.feature && pool.some(c => c.id === S.feature)) return pool.find(c => c.id === S.feature);
-    const day = Math.floor(Date.now() / 864e5);
-    const c = pool[day % pool.length]; S.feature = c.id; return c;
-  }
-
-  function renderHome(app) {
-    const series = allSeries(), n = S.clips.length, pend = pending().length;
-    app.innerHTML = `
-      <div class="top"><h1 class="logo">Echo<span>.</span></h1><button class="ver" id="verBtn" type="button" aria-label="Versión y novedades">v${versionStr()}</button><button class="iconbtn" id="gearBtn" type="button" aria-label="Conexión con GitHub">${ICON.gear}</button></div>
-      <div class="search">${ICON.search}<input id="q" type="search" placeholder="Busca una frase, personaje o serie" value="${esc(S.q)}" aria-label="Buscar"></div>
-      <p class="sync" id="sync">${esc(S.syncMsg)}</p>
-      <div id="body"></div>
-      <div class="tools"><button id="exportBtn" type="button">Descargar respaldo</button></div>`;
-    const body = $('#body');
+    const app = $('#app'), all = sources();
+    if (S.source && !all.some(s => s.key === S.source)) { S.source = null; S.season = null; }
+    const src = S.source ? srcBy(S.source) : null;
+    const filtered = all.filter(s => S.type === 'all' || s.kind === S.type);
     const q = S.q.trim().toLowerCase();
-    if (q || S.pendingOnly) {
-      const list = (S.pendingOnly ? pending() : S.clips).filter(c => !q || [c.show,c.label,c.quote,c.note,c.character,c.episodeTitle].join(' ').toLowerCase().includes(q)).sort((a,b)=>a.show.localeCompare(b.show)||order(a,b));
-      body.innerHTML = `<div class="h">${S.pendingOnly ? `Escenas sin frase <small>${list.length}</small>` : `Resultados <small>${list.length}</small>`}<button type="button" id="clearFilter">Ver todo</button></div>`;
-      if (!list.length) body.insertAdjacentHTML('beforeend', `<p class="empty">${S.pendingOnly ? 'Todas tus escenas ya tienen su frase.' : 'Ninguna escena coincide con tu búsqueda.'}</p>`);
-      list.forEach(c => body.appendChild(page(c, { showName: true })));
-      $('#clearFilter').onclick = () => { S.pendingOnly = false; S.q = ''; render(); };
-    } else {
-      const f = pickFeature();
-      if (f) {
-        body.insertAdjacentHTML('beforeend', `<div class="h">Proyección de hoy <button type="button" id="shuffle">${ICON.shuffle} Otra escena</button></div>`);
-        body.appendChild(page(f, { showName: true, feature: true }));
-        $('#shuffle').onclick = () => {
-          const withQ = S.clips.filter(c => c.quote); const pool = (withQ.length > 1 ? withQ : S.clips).filter(c => c.id !== S.feature);
-          if (pool.length) { S.feature = pool[Math.floor(Math.random()*pool.length)].id; render(); }
-        };
-      }
-      if (pend) {
-        const b = document.createElement('button'); b.type = 'button'; b.className = 'pending';
-        b.innerHTML = `<b>${pend}</b><span>${pend === 1 ? 'escena espera su frase' : 'escenas esperan su frase'}<small>Tócalas para completarlas mientras ves la serie</small></span><i>›</i>`;
-        b.onclick = () => { S.pendingOnly = true; render(); scrollTo(0,0); };
-        body.appendChild(b);
-      }
-      body.insertAdjacentHTML('beforeend', `<div class="h">Tu cartelera <small>${plural(n,'escena','escenas')}</small></div>`);
-      const grid = document.createElement('div'); grid.className = 'grid';
-      series.forEach(s => {
-        const cs = clipsOf(s.name);
-        const b = document.createElement('button'); b.type = 'button'; b.className = 'poster'; b.style.setProperty('--g', grad(s.name));
-        const meta = s.kind === 'pelicula' ? 'Película' : s.seasons ? plural(s.seasons.length,'temporada','temporadas') : 'Serie';
-        const fr = cs.filter(x => x.quote).length;
-        b.innerHTML = `<span class="n">${fr}/${cs.length} frases</span><span class="prog"><i style="width:${cs.length ? fr/cs.length*100 : 0}%"></i></span><span class="t">${esc(s.name)}</span><span class="m">${meta}${s.platform ? ', ' + esc(s.platform) : ''}</span>`;
-        b.onclick = () => openSeries(s.name);
-        grid.appendChild(b);
-      });
-      const add = document.createElement('button'); add.type = 'button'; add.className = 'poster add';
-      add.innerHTML = '<div><span>+</span><br>Nueva serie<br>o película</div>'; add.onclick = () => openSeriesForm(null, true);
-      grid.appendChild(add); body.appendChild(grid);
-    }
-    const qi = $('#q');
-    qi.oninput = e => { S.q = e.target.value; const pos = e.target.selectionStart; render(); const n2 = $('#q'); n2.focus(); n2.setSelectionRange(pos,pos); };
-    $('#gearBtn').onclick = () => openSettings();
-    $('#verBtn').onclick = () => openSettings();
-    $('#exportBtn').onclick = () => {
-      const blob = new Blob([JSON.stringify({ clips: S.clips, catalog: S.catalog }, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'echo.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    };
-  }
+    let list = S.clips.filter(c => (S.type === 'all' || kindOf(c) === S.type) && (!src || keyOf(c.show) === src.key) && (!S.season || c.season === S.season)
+      && (!q || [c.show,c.label,c.quote,c.note,c.character,c.episodeTitle,c.context].join(' ').toLowerCase().includes(q)));
+    const withQ = list.filter(c => c.quote), pend = list.filter(c => !c.quote);
+    const totalQ = S.clips.filter(c => c.quote).length;
+    const showHero = !src && !q && S.type === 'all';
 
-  function renderSeries(app) {
-    const s = seriesBy(S.current), cs = clipsOf(s.name), c = color(s.name);
-    const total = s.seasons ? s.seasons.reduce((a,b)=>a+b,0) : 0;
-    const eps = new Set(cs.map(x => `${x.season}-${x.episode}`)).size;
-    const done = cs.filter(x => x.quote).length;
     app.innerHTML = `
-      <div class="bar-top"><button class="back" id="backBtn" type="button">${ICON.back}Cartelera</button></div>
-      <section class="hero" style="--g:${grad(s.name)}">
-        <button class="edit" id="editSeries" type="button">Editar</button>
-        <h2>${esc(s.name)}</h2>
-        <p>${esc([s.platform, s.kind==='pelicula' ? 'Película' : s.seasons ? `${plural(s.seasons.length,'temporada','temporadas')}, ${total} episodios` : 'Serie'].filter(Boolean).join(', '))}</p>
-        <div class="stats"><div>${cs.length}<small>escenas</small></div>${s.kind!=='pelicula'?`<div>${eps}<small>episodios</small></div>`:''}<div>${done}/${cs.length}<small>con frase</small></div></div>
-      </section>
+      <div class="top"><h1 class="logo">Echo<span>.</span></h1><button class="pill" id="verBtn" type="button" aria-label="Versión">v${esc(versionStr())}</button><button class="iconbtn" id="gearBtn" type="button" aria-label="Ajustes">${I.gear}</button></div>
+      ${showHero ? `<section class="hero">
+        <blockquote>Toda gran idea empieza como una frase que alguien se atrevió a repetir.</blockquote>
+        <p>Las mejores ideas son las que se llevan a cabo... porque todo inició con una frase obviamente pero poderosa</p>
+        <div class="counts"><div>${totalQ}<small>${totalQ === 1 ? 'frase' : 'frases'}</small></div><div>${all.length}<small>${all.length === 1 ? 'fuente' : 'fuentes'}</small></div><div>${S.clips.length - totalQ}<small>por completar</small></div></div>
+      </section>` : ''}
+      <div class="sticky">
+        <div class="search">${I.search}<input id="q" type="search" placeholder="Busca una frase, persona o serie" value="${esc(S.q)}" aria-label="Buscar"></div>
+        <div class="seg" role="group" aria-label="Tipo">${[['all','Todo'],['serie','Series'],['pelicula','Películas'],['persona','Personas']].map(([k,l]) => `<button type="button" data-t="${k}" aria-pressed="${S.type===k}">${l}</button>`).join('')}</div>
+        ${filtered.length ? `<div class="strip" id="strip">${filtered.map(s => `<button type="button" class="src" data-s="${esc(s.key)}" aria-pressed="${S.source===s.key}"><span class="sw" style="--g:${grad(s.name)}">${esc(initials(s.name))}</span><span><b>${esc(s.name)}</b><small>${s.done}/${s.total} ${s.total===1?'frase':'frases'}</small></span></button>`).join('')}</div>` : ''}
+      </div>
       <p class="sync" id="sync">${esc(S.syncMsg)}</p>
-      <div id="mapBox"></div><div id="pages"></div>`;
-    $('#backBtn').onclick = () => { S.view='home'; S.current=null; S.sel=null; render(); scrollTo(0,0); };
-    $('#editSeries').onclick = () => openSeriesForm(s);
-    const mapBox = $('#mapBox');
-    if (s.kind !== 'pelicula') {
-      if (s.seasons) {
-        const has = {}, open = {}; cs.forEach(x => { const k = `${x.season}-${x.episode}`; has[k] = (has[k]||0)+1; if (!x.quote) open[k] = true; });
-        let html = `<div class="h">Mapa de episodios</div><div class="map" style="--c:${c}">`;
-        s.seasons.forEach((n,i) => {
-          const sn = i+1; html += `<div class="srow"><b>T${sn}</b><div class="cells">`;
-          for (let e=1;e<=n;e++) { const on = has[`${sn}-${e}`], part = open[`${sn}-${e}`]; const sel = S.sel && S.sel.season===sn && S.sel.episode===e;
-            html += `<button type="button" class="cell${on?' on':''}${part?' part':''}${sel?' sel':''}" data-s="${sn}" data-e="${e}" aria-label="Temporada ${sn}, episodio ${e}${on?`, ${on} escena${on>1?'s':''}${part?', falta frase':''}`:''}">${e}</button>`; }
-          html += '</div></div>';
-        });
-        html += `<div class="legend"><span><i style="background:${c}"></i>Con frase</span><span><i style="background:color-mix(in srgb,${c} 26%,var(--paper))"></i>Falta la frase</span><span><i style="box-shadow:inset 0 0 0 2px var(--ink)"></i>Marcado para agregar</span></div></div>`;
-        mapBox.innerHTML = html;
-        mapBox.querySelectorAll('.cell').forEach(b => b.onclick = () => {
-          const sn = +b.dataset.s, e = +b.dataset.e;
-          if (b.classList.contains('on')) {
-            const el = document.getElementById(`ep-${sn}-${e}`);
-            if (el) { el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' }); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
-          } else {
-            S.sel = S.sel && S.sel.season === sn && S.sel.episode === e ? null : { season: sn, episode: e };
-            mapBox.querySelectorAll('.cell.sel').forEach(x => x.classList.remove('sel'));
-            if (S.sel) b.classList.add('sel');
-            updateFab();
-          }
-        });
-      } else {
-        mapBox.innerHTML = `<div class="h">Mapa de episodios</div><div class="map"><p class="hint" style="font-size:.9rem;margin:0">Agrega cuántos episodios tiene cada temporada para ver el mapa y elegir episodios con un toque. <button type="button" class="mini" id="addSeasons" style="margin-top:8px">Agregar temporadas</button></p></div>`;
-        $('#addSeasons').onclick = () => openSeriesForm(s);
+      <div id="feed"></div>`;
+
+    const feed = $('#feed');
+    if (src) {
+      const seasons = src.kind === 'serie' ? [...new Set(S.clips.filter(c => keyOf(c.show) === src.key && c.quote && c.season).map(c => c.season))].sort((a,b)=>a-b) : [];
+      const h = document.createElement('section'); h.className = 'srch'; h.style.setProperty('--g', grad(src.name));
+      h.innerHTML = `<button type="button" class="edit">Editar</button><h2>${esc(src.name)}</h2><p>${esc(subtitle(src))}${src.kind==='serie' && src.seasons ? `, ${plural(src.seasons.length,'temporada','temporadas')}` : ''}. ${src.done} de ${plural(src.total,'escena','escenas')} con frase.</p><div class="prog"><i style="width:${src.total ? src.done/src.total*100 : 0}%"></i></div>`;
+      h.querySelector('.edit').onclick = () => openEdit(src);
+      feed.appendChild(h);
+      if (seasons.length > 1) {
+        const row = document.createElement('div'); row.className = 'seasons';
+        row.innerHTML = `<button type="button" class="chip" data-sn="" aria-pressed="${!S.season}">Todas</button>` + seasons.map(n => { const c = S.clips.filter(x => keyOf(x.show)===src.key && x.season===n && x.quote).length; return `<button type="button" class="chip" data-sn="${n}" aria-pressed="${S.season===n}">T${n}<small>${c}</small></button>`; }).join('');
+        row.querySelectorAll('button').forEach(b => b.onclick = () => { S.season = b.dataset.sn ? +b.dataset.sn : null; render(); });
+        feed.appendChild(row);
       }
     }
-    const box = $('#pages');
-    if (!cs.length) { box.innerHTML = '<p class="empty">Aún no hay escenas de esta serie.</p>'; return; }
-    let last;
-    cs.forEach(x => {
-      if (s.kind !== 'pelicula' && x.season !== last) { last = x.season; box.insertAdjacentHTML('beforeend', `<div class="season-h">Temporada ${x.season ?? '?'}</div>`); }
-      box.appendChild(page(x, {}));
-    });
-  }
 
-  function page(x, { showName, feature }) {
-    const c = color(x.show), s = toSec(x.start), e = toSec(x.end);
-    const span = Math.max(e || s || 0, 45*60);
-    const left = s!=null ? s/span*100 : 0, width = s!=null&&e!=null ? Math.max((e-s)/span*100,1.5) : 1.5;
-    const dur = s!=null && e!=null && e>s ? fmt(e-s) : '';
-    const where = x.kind==='pelicula' ? '' : `T${x.season ?? '?'} E${x.episode ?? '?'}`;
-    const el = document.createElement('article'); el.className = 'page' + (feature ? ' feature' : ''); el.style.setProperty('--c', c);
-    if (!showName && x.kind !== 'pelicula' && !document.getElementById(`ep-${x.season}-${x.episode}`)) el.id = `ep-${x.season}-${x.episode}`;
-    el.innerHTML = `
-      <div class="slug"><span class="loc">${showName ? `<span class="show">${esc(x.show)}</span><br>` : ''}${where}${x.episodeTitle ? ` <em>“${esc(x.episodeTitle)}”</em>` : ''}${where || x.episodeTitle ? ' — ' : ''}${esc(x.start)}</span>${x.label ? `<span class="label">${esc(x.label)}</span>` : ''}</div>
-      ${x.quote ? dialogue(x)
-        : `<button type="button" class="missing" data-act="write"><strong>Falta la frase.</strong><br>Pausa en ${esc(x.start)} y toca aquí para escribirla.</button>${x.note ? `<p class="paren">(${esc(x.note)})</p>` : ''}`}
-      <div class="foot"><span class="tc">${esc(x.start)}${x.end ? '–' + esc(x.end) : ''}${dur ? ` (${dur})` : ''}</span><span class="bar" aria-hidden="true"><i style="left:${left}%;width:${width}%"></i></span>
-        ${x.quote ? `<button type="button" class="mini" data-act="share" aria-label="Compartir frase">${ICON.share}</button>` : ''}
-        <button type="button" class="mini" data-act="edit" aria-label="Editar escena">${ICON.edit}</button></div>`;
-    const more = el.querySelector('.more');
-    if (more) more.onclick = () => { const d = el.querySelector('.dialogue'); const open = d.classList.toggle('clamp') === false; more.textContent = open ? 'Ver menos' : 'Ver completa'; more.setAttribute('aria-expanded', String(open)); };
-    el.querySelectorAll('[data-act]').forEach(b => b.onclick = () => {
-      if (b.dataset.act === 'share') return shareClip(x);
-      openClipForm(x.show, x, null, b.dataset.act === 'write' ? 'quote' : null);
+    if (!withQ.length && !pend.length) {
+      feed.insertAdjacentHTML('beforeend', S.clips.length ? '<div class="empty"><b>Nada por aquí.</b>Prueba con otra búsqueda o filtro.</div>' : '<div class="empty"><b>Tu primera frase te espera.</b>Toca "Nueva frase" para empezar.</div>');
+    }
+    // feed of quotes
+    const grouped = src && src.kind === 'serie';
+    const items = grouped ? withQ.sort(order) : withQ.sort((a,b) => (b.updatedAt||b.createdAt||0) - (a.updatedAt||a.createdAt||0));
+    let lastS;
+    items.forEach(c => {
+      if (grouped && c.season !== lastS) { lastS = c.season; feed.insertAdjacentHTML('beforeend', `<div class="group"><span>Temporada ${c.season ?? '?'}</span></div>`); }
+      feed.appendChild(card(c, !src));
     });
-    return el;
+    // pending
+    if (pend.length) {
+      const box = document.createElement('section'); box.className = 'pend'; box.setAttribute('open-state', String(S.pendOpen));
+      box.innerHTML = `<button type="button" aria-expanded="${S.pendOpen}"><b>${pend.length}</b><span>${pend.length===1?'Escena por completar':'Escenas por completar'}<small>Registradas, pero aún sin frase</small></span><i>›</i></button>`;
+      if (S.pendOpen) pend.sort((a,b)=>a.show.localeCompare(b.show)||order(a,b)).forEach(c => {
+        const r = document.createElement('button'); r.type = 'button'; r.className = 'prow'; r.style.setProperty('--c', color(c.show));
+        r.innerHTML = `<i class="d"></i><span>${esc(c.label || 'Sin etiqueta')}<small>${esc(c.show)}${kindOf(c)==='serie' ? `, T${c.season} E${c.episode}` : ''}${c.start ? `, ${esc(c.start)}` : ''}</small></span><em>Escribir</em>`;
+        r.onclick = () => openComposer({ clip: c, focus: 'quote' });
+        box.appendChild(r);
+      });
+      box.firstElementChild.onclick = () => { S.pendOpen = !S.pendOpen; render(); };
+      feed.appendChild(box);
+    }
+
+    // wire
+    $('#gearBtn').onclick = () => openSettings(); $('#verBtn').onclick = () => openSettings();
+    const qi = $('#q'); qi.oninput = e => { S.q = e.target.value; const p = e.target.selectionStart; render(); const n = $('#q'); n.focus(); n.setSelectionRange(p,p); };
+    app.querySelectorAll('.seg button').forEach(b => b.onclick = () => { S.type = b.dataset.t; S.source = null; S.season = null; render(); });
+    app.querySelectorAll('.src').forEach(b => b.onclick = () => { S.source = S.source === b.dataset.s ? null : b.dataset.s; S.season = null; render(); });
+    const sel = app.querySelector('.src[aria-pressed="true"]'); if (sel) sel.scrollIntoView({ inline: 'center', block: 'nearest' });
+    $('#fab').innerHTML = `${I.plus}Nueva frase`;
   }
 
   function turnsOf(q) {
@@ -516,213 +423,243 @@ dialog::backdrop{background:rgba(10,12,16,.55)}
       else if (turns.length) turns[turns.length-1].text += (turns[turns.length-1].text ? '\n' : '') + raw;
       else turns.push({ who: '', text: raw });
     });
-    return conv ? turns.filter(t => t.who || t.text.trim()) : null;
+    if (!conv) return null;
+    const out = [];
+    turns.filter(t => t.who || t.text.trim()).forEach(t => { const p = out[out.length-1]; if (p && t.who && keyOf(p.who) === keyOf(t.who)) p.text += '\n' + t.text; else out.push({ ...t }); });
+    return out;
   }
-  function dialogue(x) {
-    const q = x.quote, turns = turnsOf(q);
-    const long = q.length > 260 || q.split('\n').length > 6;
-    const short = !turns && q.length <= 160;
-    const paren = x.note ? `<span class="paren">(${esc(x.note)})</span>` : '';
-    let inner;
-    if (turns) inner = paren + turns.map(t => `<div class="turn">${t.who ? `<span class="who">${esc(t.who)}</span>` : ''}<span class="line">${esc(t.text.trim())}</span></div>`).join('');
-    else inner = `${x.character ? `<span class="char">${esc(x.character)}</span>` : ''}${paren}<span class="line">${esc(q)}</span>`;
-    return `<div class="dialogue${short ? ' short' : ''}${long ? ' clamp' : ''}">${inner}</div>${long ? '<button type="button" class="more" aria-expanded="false">Ver completa</button>' : ''}`;
+
+  function card(c, showSource) {
+    const k = kindOf(c), turns = turnsOf(c.quote);
+    const long = c.quote.length > 240 || c.quote.split('\n').length > 6;
+    const el = document.createElement('article'); el.className = 'q'; el.style.setProperty('--c', color(c.show)); el.id = 'c-' + c.id;
+    const body = turns ? turns.map(t => `<span class="turn">${t.who ? `<span class="who">${esc(t.who)}</span>` : ''}<span class="tx">${esc(t.text.trim())}</span></span>`).join('') : esc(c.quote);
+    let where = '';
+    if (k === 'serie') where = `T${c.season ?? '?'} E${c.episode ?? '?'}${c.episodeTitle ? ` “${esc(c.episodeTitle)}”` : ''}${c.start ? `, ${esc(c.start)}` : ''}`;
+    else if (k === 'pelicula') where = c.start ? esc(c.start) : '';
+    else where = esc(c.context || '');
+    const by = !turns && (k === 'persona' ? '' : c.character) ? `<div class="by">— ${esc(c.character)}</div>` : '';
+    el.innerHTML = `
+      ${c.label ? `<span class="tag">${esc(c.label)}</span>` : ''}
+      ${c.note ? `<p class="paren">(${esc(c.note)})</p>` : ''}
+      <div class="qt${turns ? '' : ' single'}${long ? ' clamp' : ''}">${body}</div>
+      ${long ? '<button type="button" class="more" aria-expanded="false">Ver completa</button>' : ''}
+      ${by}
+      <div class="qf"><div class="meta">${showSource || k === 'persona' ? `<span><b>${esc(c.show)}</b>${k==='persona' && c.role ? `, ${esc(c.role)}` : ''}</span>` : ''}${where ? `<span>${where}</span>` : ''}</div>
+        <button type="button" class="mini" data-a="share" aria-label="Compartir">${I.share}</button>
+        <button type="button" class="mini" data-a="edit" aria-label="Editar">${I.edit}</button></div>`;
+    const more = el.querySelector('.more');
+    if (more) more.onclick = () => { const q = el.querySelector('.qt'); const open = !q.classList.toggle('clamp'); more.textContent = open ? 'Ver menos' : 'Ver completa'; more.setAttribute('aria-expanded', String(open)); };
+    el.querySelector('[data-a="share"]').onclick = () => share(c);
+    el.querySelector('[data-a="edit"]').onclick = () => openComposer({ clip: c });
+    return el;
   }
-  async function shareClip(x) {
-    const text = `“${x.quote}”${x.character ? `\n— ${x.character}` : ''}\n${x.show}${x.kind==='pelicula' ? '' : ` T${x.season}E${x.episode}`}, ${x.start}`;
+
+  async function share(c) {
+    const k = kindOf(c);
+    const src = k === 'serie' ? `${c.show} T${c.season}E${c.episode}` : c.show;
+    const text = `“${c.quote}”\n— ${k === 'persona' ? c.show : (c.character ? c.character + ', ' : '') + src}`;
     try { if (navigator.share) { await navigator.share({ text }); return; } } catch (e) { if (e.name === 'AbortError') return; }
     try { await navigator.clipboard.writeText(text); toast('Frase copiada'); } catch { toast('No se pudo copiar'); }
   }
 
-  function openSeries(name) { S.view='series'; S.current=name; S.q=''; S.sel=null; S.pendingOnly=false; render(); scrollTo(0,0); }
-  function updateFab() {
-    const f = $('#fab');
-    f.innerHTML = `${ICON.plus}${S.view === 'series' && S.sel ? `Agregar en T${S.sel.season} E${S.sel.episode}` : 'Nueva escena'}`;
-  }
+  // ---------- composer ----------
+  const cf = $('#cForm');
+  const C = { kind: 'serie', src: null, isNew: false, role: '', season: null, episode: null, editing: null };
+  let cfInit = '';
+  const formVals = () => JSON.stringify([C.kind, C.src, C.isNew, C.role, C.season, C.episode, ...['nsName','nsPlat','nsSeasons','mS','mE','tc','quote','who','ctx','label','note'].map(n => cf[n].value)]);
 
-  // ---------- dialogs ----------
-  const closeDlg = d => {
-    if (d.id === 'clipDlg' && formVals() !== cfInitial && !confirm('¿Descartar los cambios de esta escena?')) return;
-    d.close();
-  };
-  document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => closeDlg(b.closest('dialog')));
-  $('#clipDlg').addEventListener('cancel', e => { e.preventDefault(); closeDlg($('#clipDlg')); });
+  function chipsHTML(items, pressed) { return items.map(([v, l]) => `<button type="button" class="chip" data-v="${esc(v)}" aria-pressed="${pressed === v}">${esc(l)}</button>`).join(''); }
+  function curSource() { return C.isNew ? null : (C.src ? srcBy(C.src) : null); }
+  function seasonsOf() { if (C.isNew) { const s = (cf.nsSeasons.value.match(/\d+/g) || []).map(Number).filter(n=>n>0); return s.length ? s : null; } return curSource()?.seasons || null; }
 
-  $('#fab').onclick = () => {
-    if (S.view === 'series') return openClipForm(S.current, null, S.sel);
-    const list = $('#pickList'); list.innerHTML = '';
-    allSeries().forEach(s => {
-      const b = document.createElement('button'); b.type='button'; b.className='pick'; b.style.setProperty('--g', grad(s.name));
-      b.innerHTML = `${esc(s.name)}<small>${plural(clipsOf(s.name).length,'escena','escenas')}</small>`;
-      b.onclick = () => { $('#pickDlg').close(); openClipForm(s.name); };
-      list.appendChild(b);
-    });
-    const nb = document.createElement('button'); nb.type='button'; nb.className='pick plain'; nb.textContent = '+ Nueva serie o película';
-    nb.onclick = () => { $('#pickDlg').close(); openSeriesForm(null, true); };
-    list.appendChild(nb);
-    $('#pickDlg').showModal();
-  };
-
-  // series form
-  const sf = $('#seriesForm'); let sfEditing = null, sfThenClip = false;
-  const syncKind = () => { $('#seasonsField').hidden = sf.kind.value === 'pelicula'; };
-  sf.kind.onchange = syncKind;
-  function openSeriesForm(s, thenClip) {
-    sfEditing = s || null; sfThenClip = !!thenClip; sf.reset();
-    $('#seriesTitle').textContent = s ? `Editar ${s.name}` : 'Nueva serie o película';
-    sf.name.value = s?.name || ''; sf.kind.value = s?.kind || 'serie'; sf.platform.value = s?.platform ?? 'Netflix';
-    sf.seasons.value = s?.seasons ? s.seasons.join(', ') : '';
-    syncKind(); $('#seriesDlg').showModal();
-  }
-  sf.onsubmit = async ev => {
-    ev.preventDefault();
-    const name = sf.name.value.trim(); if (!name) return sf.name.focus();
-    const kind = sf.kind.value;
-    const seasons = kind === 'pelicula' ? null : (sf.seasons.value.match(/\d+/g) || []).map(Number).filter(n => n > 0);
-    const entry = { name, kind, platform: sf.platform.value.trim(), seasons: seasons && seasons.length ? seasons : null };
-    const oldKey = sfEditing ? keyOf(sfEditing.name) : null, newKey = keyOf(name);
-    try {
-      await commit(d => {
-        if (oldKey && oldKey !== newKey) { delete d.catalog[oldKey]; d.clips.forEach(c => { if (keyOf(c.show) === oldKey) c.show = name; }); }
-        d.catalog[newKey] = entry;
-      }, sfEditing ? `Actualiza serie: ${name}` : `Agrega serie: ${name}`);
-    } catch { return; }
-    $('#seriesDlg').close(); S.view='series'; S.current=name; render();
-    if (sfThenClip) openClipForm(name);
-  };
-
-  // clip form
-  const cf = $('#clipForm'); let cfInitial = '';
-  const formVals = () => [S.pick.season, S.pick.episode, cf.mseason.value, cf.mepisode.value, cf.tc.value, cf.character.value, cf.quote.value, cf.label.value, cf.note.value].join('|');
-  function buildPickers() {
-    const s = S.ctx, film = s.kind === 'pelicula';
-    $('#seasonField').hidden = $('#epField').hidden = film || !s.seasons;
-    $('#manualEp').hidden = film || !!s.seasons;
-    if (film || !s.seasons) { updateDest(); return; }
-    const sc = $('#seasonChips'); sc.innerHTML = '';
-    s.seasons.forEach((_, i) => {
-      const b = document.createElement('button'); b.type='button'; b.className='chip'; b.textContent = `T${i+1}`;
-      b.setAttribute('aria-pressed', String(S.pick.season === i+1));
-      b.onclick = () => { S.pick.season = i+1; S.pick.episode = null; buildPickers(); };
-      sc.appendChild(b);
-    });
-    const g = $('#epGrid'); g.innerHTML = '';
-    if (!S.pick.season) { $('#epHint').textContent = '(elige primero la temporada)'; }
-    else {
-      $('#epHint').textContent = '';
-      const taken = new Set(clipsOf(s.name).filter(c => c.season === S.pick.season).map(c => c.episode));
-      for (let e = 1; e <= s.seasons[S.pick.season-1]; e++) {
-        const b = document.createElement('button'); b.type='button'; b.className = 'ep' + (taken.has(e) ? ' has' : ''); b.textContent = e;
-        b.setAttribute('aria-pressed', String(S.pick.episode === e)); b.setAttribute('aria-label', `Episodio ${e}${taken.has(e) ? ', ya tiene escena' : ''}`);
-        b.onclick = () => { S.pick.episode = e; buildPickers(); };
-        g.appendChild(b);
+  function buildComposer() {
+    $('#kSeg').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === C.kind)));
+    const list = sources().filter(s => s.kind === C.kind);
+    $('#srcLbl').textContent = C.kind === 'persona' ? '¿Quién lo dijo?' : C.kind === 'pelicula' ? '¿Qué película?' : '¿Qué serie?';
+    const sc = $('#srcChips');
+    sc.innerHTML = chipsHTML(list.map(s => [s.key, s.name]), C.isNew ? null : C.src) + `<button type="button" class="chip new" data-v="__new" aria-pressed="${C.isNew}">+ ${C.kind === 'persona' ? 'Nueva persona' : C.kind === 'pelicula' ? 'Nueva película' : 'Nueva serie'}</button>`;
+    sc.querySelectorAll('button').forEach(b => b.onclick = () => { if (b.dataset.v === '__new') { C.isNew = true; C.src = null; } else { C.isNew = false; C.src = b.dataset.v; } C.season = null; C.episode = null; buildComposer(); if (C.isNew) cf.nsName.focus(); });
+    // new source
+    $('#newSrc').hidden = !C.isNew;
+    $('#nsNameLbl').textContent = C.kind === 'persona' ? 'Nombre' : 'Título';
+    cf.nsName.placeholder = C.kind === 'persona' ? 'Richard Feynman' : C.kind === 'pelicula' ? 'Interstellar' : 'Breaking Bad';
+    $('#nsRoleF').hidden = C.kind !== 'persona';
+    $('#nsRoles').innerHTML = chipsHTML(ROLES.map(r => [r, r]), C.role);
+    $('#nsRoles').querySelectorAll('button').forEach(b => b.onclick = () => { C.role = b.dataset.v; if (C.role === 'Mía' && !cf.nsName.value.trim()) cf.nsName.value = 'Mauricio'; buildComposer(); });
+    $('#nsPlatF').hidden = C.kind === 'persona';
+    $('#nsSeasF').hidden = C.kind !== 'serie';
+    // season / episode
+    const isSerie = C.kind === 'serie', seas = isSerie ? seasonsOf() : null, hasSrc = C.isNew || !!C.src;
+    $('#seasF').hidden = $('#epF').hidden = !(isSerie && seas && hasSrc);
+    $('#manF').hidden = !(isSerie && !seas && hasSrc);
+    if (isSerie && seas && hasSrc) {
+      if (C.season && C.season > seas.length) C.season = null;
+      $('#seasChips').innerHTML = chipsHTML(seas.map((_, i) => [String(i+1), `T${i+1}`]), C.season ? String(C.season) : null);
+      $('#seasChips').querySelectorAll('button').forEach(b => b.onclick = () => { C.season = +b.dataset.v; C.episode = null; buildComposer(); });
+      const g = $('#epGrid'); g.innerHTML = ''; g.style.setProperty('--c', color(C.src || cf.nsName.value || 'x'));
+      $('#epHint').textContent = C.season ? '' : '(elige la temporada)';
+      if (C.season) {
+        const taken = new Set(S.clips.filter(c => keyOf(c.show) === C.src && c.season === C.season).map(c => c.episode));
+        for (let e = 1; e <= seas[C.season-1]; e++) {
+          const b = document.createElement('button'); b.type = 'button'; b.className = 'ep' + (taken.has(e) ? ' has' : ''); b.textContent = e;
+          b.setAttribute('aria-pressed', String(C.episode === e)); b.onclick = () => { C.episode = e; buildComposer(); };
+          g.appendChild(b);
+        }
       }
+      requestAnimationFrame(() => $('#seasChips [aria-pressed="true"]')?.scrollIntoView({ inline: 'center', block: 'nearest' }));
     }
-    requestAnimationFrame(() => sc.querySelector('[aria-pressed="true"]')?.scrollIntoView({ inline: 'center', block: 'nearest' }));
+    $('#tcF').hidden = C.kind === 'persona';
+    $('#whoF').hidden = C.kind === 'persona';
+    $('#ctxF').hidden = C.kind !== 'persona';
+    const whos = [...new Set(S.clips.filter(c => keyOf(c.show) === C.src).map(c => c.character).filter(Boolean))];
+    $('#whoList').innerHTML = whos.map(w => `<option value="${esc(w)}">`).join('');
     updateDest();
   }
-  function current() {
-    const s = S.ctx;
-    if (s.kind === 'pelicula') return { season: null, episode: null };
-    if (s.seasons) return { season: S.pick.season, episode: S.pick.episode };
-    const n = v => v === '' ? null : Number(v);
-    return { season: n(cf.mseason.value), episode: n(cf.mepisode.value) };
+  function epNow() {
+    if (C.kind !== 'serie') return { season: null, episode: null };
+    if (seasonsOf()) return { season: C.season, episode: C.episode };
+    const n = v => v === '' ? null : Number(v); return { season: n(cf.mS.value), episode: n(cf.mE.value) };
   }
+  function srcName() { return C.isNew ? cf.nsName.value.trim() : (curSource()?.name || ''); }
   function updateDest() {
-    const s = S.ctx, el = $('#dest'); if (!s) return;
-    const { season, episode } = current();
-    const ok = s.kind === 'pelicula' || (season && episode);
-    el.textContent = s.kind === 'pelicula' ? `Se guardará en ${s.name}` : ok ? `Se guardará en ${s.name}, T${season} E${episode}` : 'Falta elegir temporada y episodio';
-    el.classList.toggle('warn', !ok);
+    const el = $('#dest'), name = srcName(), { season, episode } = epNow();
+    let msg, ok = true;
+    if (!name) { msg = C.kind === 'persona' ? 'Falta elegir quién lo dijo' : 'Falta elegir la ' + (C.kind === 'pelicula' ? 'película' : 'serie'); ok = false; }
+    else if (C.kind === 'serie' && !(season && episode)) { msg = `${name}: falta temporada y episodio`; ok = false; }
+    else msg = `Se guardará en ${name}${C.kind === 'serie' ? `, T${season} E${episode}` : ''}`;
+    el.textContent = msg; el.classList.toggle('warn', !ok);
   }
-  cf.addEventListener('input', updateDest);
+  cf.addEventListener('input', () => { if (C.isNew && C.kind === 'serie') buildComposer(); else updateDest(); });
+  $('#kSeg').querySelectorAll('button').forEach(b => b.onclick = () => { if (C.editing) return; C.kind = b.dataset.k; C.src = null; C.isNew = false; C.season = C.episode = null; buildComposer(); });
 
-  function openClipForm(showName, clip, preset, focus) {
-    const s = seriesBy(showName) || { name: showName, kind: 'serie', seasons: null };
-    S.editing = clip || null; S.ctx = s; cf.reset();
-    S.pick = { season: clip?.season ?? preset?.season ?? null, episode: clip?.episode ?? preset?.episode ?? null };
-    cf.mseason.value = S.pick.season ?? ''; cf.mepisode.value = S.pick.episode ?? '';
-    $('#clipTitle').textContent = clip ? `Editar escena` : s.name;
-    $('#clipDlg').style.setProperty('--c', color(s.name));
+  function openComposer({ clip, focus } = {}) {
+    cf.reset(); C.editing = clip || null;
+    if (clip) { C.kind = kindOf(clip); C.src = keyOf(clip.show); C.isNew = false; C.season = clip.season ?? null; C.episode = clip.episode ?? null; }
+    else {
+      const cur = S.source ? srcBy(S.source) : null;
+      C.kind = cur ? cur.kind : (S.type !== 'all' ? S.type : 'serie'); C.src = cur ? cur.key : null; C.isNew = false; C.season = S.season; C.episode = null;
+    }
+    C.role = '';
+    if (clip) {
+      if (!seasonsOf()) { cf.mS.value = clip.season ?? ''; cf.mE.value = clip.episode ?? ''; }
+      cf.tc.value = clip.end ? `${clip.start} - ${clip.end}` : (clip.start || '');
+      cf.quote.value = clip.quote || ''; cf.who.value = clip.character || ''; cf.ctx.value = clip.context || ''; cf.label.value = clip.label || ''; cf.note.value = clip.note || '';
+    }
+    $('#cTitle').textContent = clip ? (clip.quote ? 'Editar frase' : 'Escribir la frase') : 'Nueva frase';
+    $('#kSeg').style.opacity = clip ? .55 : 1;
     $('#delBtn').hidden = !clip;
-    const chars = [...new Set(clipsOf(s.name).map(c => c.character).filter(Boolean))];
-    $('#charList').innerHTML = chars.map(c => `<option value="${esc(c)}">`).join('');
-    if (clip) { cf.tc.value = clip.end ? `${clip.start} - ${clip.end}` : clip.start; ['character','quote','label','note'].forEach(k => cf[k].value = clip[k] || ''); }
-    buildPickers(); cfInitial = formVals();
-    $('#clipDlg').showModal();
-    $('#clipDlg').querySelector('.sheet-body').scrollTop = 0;
+    buildComposer(); cfInit = formVals();
+    $('#cDlg').showModal(); $('#cDlg').querySelector('.sb').scrollTop = 0;
     if (focus === 'quote') setTimeout(() => { cf.quote.scrollIntoView({ block: 'center' }); cf.quote.focus(); }, 80);
   }
   const bad = (el, msg) => { el.setCustomValidity(msg); el.reportValidity(); el.focus(); setTimeout(() => el.setCustomValidity(''), 0); };
   cf.onsubmit = async ev => {
     ev.preventDefault();
-    const s = S.ctx, film = s.kind === 'pelicula', { season, episode } = current();
-    if (!film && !(season && episode)) { toast('Elige temporada y episodio'); return; }
-    const { start, end } = parseTC(cf.tc.value);
-    if (!okT(start)) return bad(cf.tc, 'Escribe el minuto como 39:50 o 39:50-42:37');
-    if (end && (!okT(end) || toSec(end) <= toSec(start))) return bad(cf.tc, 'El fin debe ser después del inicio, por ejemplo 39:50-42:37');
-    const label = cf.label.value.trim() || cf.quote.value.trim().split(/\s+/).slice(0,3).join(' ');
+    const name = srcName(); if (!name) { toast(C.isNew ? 'Escribe el nombre' : 'Elige de dónde es la frase'); if (C.isNew) cf.nsName.focus(); return; }
+    if (C.isNew && C.kind === 'persona' && !C.role) { toast('Elige quién es: científico, profesor…'); return; }
+    const { season, episode } = epNow();
+    if (C.kind === 'serie' && !(season && episode)) { toast('Elige temporada y episodio'); return; }
+    let start = '', end = '';
+    if (C.kind !== 'persona') {
+      ({ start, end } = parseTC(cf.tc.value));
+      if (C.kind === 'serie' && !okT(start)) return bad(cf.tc, 'Escribe el minuto como 39:50 o 39:50-42:37');
+      if (start && !okT(start)) return bad(cf.tc, 'Escribe el minuto como 39:50 o 39:50-42:37');
+      if (end && (!okT(end) || toSec(end) <= toSec(start))) return bad(cf.tc, 'El fin debe ser después del inicio');
+    }
+    const quote = cf.quote.value.trim();
+    if (C.kind === 'persona' && !quote) return bad(cf.quote, 'Escribe la frase');
+    const label = cf.label.value.trim() || quote.replace(/^[^:\n]{1,24}:\s*/, '').split(/\s+/).slice(0,3).join(' ');
     if (!label) return bad(cf.label, 'Pon una etiqueta corta o escribe la frase');
+    const old = C.editing, src = curSource();
     const c = {
-      id: S.editing?.id || 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2,6),
-      show: s.name, kind: film ? 'pelicula' : 'serie', platform: s.platform || S.editing?.platform || '',
-      season: film ? null : season, episode: film ? null : episode,
-      start, end, character: cf.character.value.trim(), quote: cf.quote.value.trim(), label, note: cf.note.value.trim(),
-      createdAt: S.editing?.createdAt || Date.now()
+      ...(old || {}),
+      id: old?.id || 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+      show: name, kind: C.kind,
+      platform: C.isNew ? cf.nsPlat.value.trim() : (src?.platform || old?.platform || ''),
+      season: C.kind === 'serie' ? season : null, episode: C.kind === 'serie' ? episode : null,
+      start, end, quote, label, note: cf.note.value.trim(),
+      character: C.kind === 'persona' ? '' : cf.who.value.trim(),
+      context: C.kind === 'persona' ? cf.ctx.value.trim() : '',
+      role: C.kind === 'persona' ? (C.isNew ? C.role : (src?.role || old?.role || '')) : undefined,
+      createdAt: old?.createdAt || Date.now(), updatedAt: Date.now()
     };
-    if (S.editing?.episodeTitle && S.editing.season === c.season && S.editing.episode === c.episode) c.episodeTitle = S.editing.episodeTitle;
-    const prev = S.editing ? { ...S.editing } : null;
-    const btn = cf.querySelector('.primary'); btn.disabled = true; btn.textContent = 'Guardando…';
+    if (c.role === undefined) delete c.role;
+    if (old && (old.season !== c.season || old.episode !== c.episode)) delete c.episodeTitle;
+    const newSrc = C.isNew ? { name, kind: C.kind, platform: C.kind === 'persona' ? '' : cf.nsPlat.value.trim(), seasons: C.kind === 'serie' ? seasonsOf() : null, ...(C.kind === 'persona' ? { role: C.role } : {}) } : null;
+    const prev = old ? { ...old } : null;
+    const btn = $('#saveBtn'); btn.disabled = true; btn.textContent = 'Guardando…';
     try {
-      await saveClip(c); $('#clipDlg').close(); S.sel = null;
-      if (S.view !== 'series' && !S.pendingOnly) { S.view='series'; S.current=s.name; }
-      render();
-      const where = film ? s.name : `T${c.season} E${c.episode}`;
-      toast(prev ? `Escena actualizada (${where})` : `Guardada en ${where}`, () => prev ? saveClip(prev) : removeClip(c.id));
+      await commit(d => { if (newSrc) d.catalog[keyOf(name)] = newSrc; upsert(d, c); }, `${prev ? 'Actualiza' : 'Agrega'} frase: ${describe(c)}`);
+      $('#cDlg').close();
+      if (newSrc) { S.source = keyOf(name); S.type = 'all'; render(); }
+      toast(prev ? 'Frase actualizada' : 'Frase guardada', () => commit(d => { prev ? upsert(d, prev) : d.clips = d.clips.filter(x => x.id !== c.id); }, `Deshace: ${describe(c)}`));
+      requestAnimationFrame(() => { const el = document.getElementById('c-' + c.id); if (el) { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); el.classList.add('flash'); } });
     } catch {}
-    btn.disabled = false; btn.textContent = 'Guardar escena';
+    btn.disabled = false; btn.textContent = 'Guardar';
   };
   $('#delBtn').onclick = async () => {
-    if (!S.editing || !confirm(`¿Eliminar la escena “${S.editing.label}”?`)) return;
-    const gone = { ...S.editing };
-    try { await removeClip(gone.id); $('#clipDlg').close(); toast('Escena eliminada', () => saveClip(gone)); } catch {}
+    const c = C.editing; if (!c || !confirm(`¿Eliminar “${c.label}”?`)) return;
+    try { await removeClip(c.id); $('#cDlg').close(); toast('Frase eliminada', () => commit(d => upsert(d, c), `Restaura: ${describe(c)}`)); } catch {}
   };
 
-  // settings
-  const stDlg = $('#settingsDlg'), stForm = $('#settingsForm');
+  // ---------- edit source ----------
+  const ef = $('#eForm'); let E = null, eRole = '';
+  function openEdit(s) {
+    E = s; eRole = s.role || ''; ef.reset();
+    $('#eTitle').textContent = `Editar ${kindName(s.kind).toLowerCase()}`;
+    ef.name.value = s.name; ef.plat.value = s.platform || ''; ef.seasons.value = s.seasons ? s.seasons.join(', ') : '';
+    $('#eRoleF').hidden = s.kind !== 'persona'; $('#ePlatF').hidden = s.kind === 'persona'; $('#eSeasF').hidden = s.kind !== 'serie';
+    const drawRoles = () => { $('#eRoles').innerHTML = chipsHTML(ROLES.map(r => [r, r]), eRole); $('#eRoles').querySelectorAll('button').forEach(b => b.onclick = () => { eRole = b.dataset.v; drawRoles(); }); };
+    drawRoles(); $('#eDlg').showModal();
+  }
+  ef.onsubmit = async ev => {
+    ev.preventDefault(); const name = ef.name.value.trim(); if (!name) return ef.name.focus();
+    const seasons = E.kind === 'serie' ? (ef.seasons.value.match(/\d+/g) || []).map(Number).filter(n=>n>0) : null;
+    const entry = { name, kind: E.kind, platform: E.kind === 'persona' ? '' : ef.plat.value.trim(), seasons: seasons && seasons.length ? seasons : null, ...(E.kind === 'persona' ? { role: eRole } : {}) };
+    const oldKey = E.key, newKey = keyOf(name);
+    try {
+      await commit(d => { if (oldKey !== newKey) delete d.catalog[oldKey]; d.catalog[newKey] = entry; d.clips.forEach(c => { if (keyOf(c.show) === oldKey) { c.show = name; if (E.kind === 'persona') c.role = eRole; } }); }, `Actualiza fuente: ${name}`);
+      S.source = newKey; $('#eDlg').close(); render();
+    } catch {}
+  };
+
+  // ---------- settings ----------
+  const sf = $('#sForm');
   function openSettings(msg) {
-    stForm.token.value = getToken();
+    sf.token.value = getToken();
     $('#stMsg').textContent = msg || (getToken() ? 'Conectado. Cada cambio se guarda como un commit.' : 'Sin token, la app solo puede leer.');
     $('#stMsg').classList.toggle('warn', !getToken());
-    $('#stRepo').textContent = `${CFG.owner}/${CFG.repo}`;
-    $('#clearToken').hidden = !getToken();
+    $('#stRepo').textContent = `${CFG.owner}/${CFG.repo}`; $('#clearToken').hidden = !getToken();
     const m = S.meta, when = m?.updated ? new Date(m.updated).toLocaleString('es-MX', { dateStyle: 'medium', timeStyle: 'short' }) : null;
-    $('#vInfo').innerHTML = `<div>App: <b>v${APP_VERSION}</b></div><div>Datos: <b>v${esc(versionStr())}</b>${m?.app === APP_VERSION && m.patch ? ` (${plural(m.patch,'cambio','cambios')} de frases en esta versión)` : ' (sin cambios de frases en esta versión)'}</div>${when ? `<div>Último guardado: ${esc(when)}</div>` : ''}`;
+    $('#vInfo').innerHTML = `<div>App: <b>v${APP_VERSION}</b></div><div>Datos: <b>v${esc(versionStr())}</b>${m?.app === APP_VERSION && m.patch ? ` (${plural(m.patch,'cambio','cambios')} en esta versión)` : ' (sin cambios en esta versión)'}</div>${when ? `<div>Último guardado: ${esc(when)}</div>` : ''}`;
     $('#vLog').innerHTML = CHANGELOG.map(([v, t]) => `<li><b>v${v}</b><span>${esc(t)}</span></li>`).join('');
-    stDlg.showModal();
+    $('#sDlg').showModal();
   }
-  stForm.onsubmit = async ev => {
-    ev.preventDefault();
-    const t = stForm.token.value.trim(); if (!t) return;
+  sf.onsubmit = async ev => {
+    ev.preventDefault(); const t = sf.token.value.trim(); if (!t) return;
     $('#stMsg').textContent = 'Probando conexión…';
     try {
-      const r = await fetch(`https://api.github.com/repos/${CFG.owner}/${CFG.repo}`, { headers: gh(t) });
-      const j = r.ok ? await r.json() : null; if (!j) throw 0;
+      const r = await fetch(`https://api.github.com/repos/${CFG.owner}/${CFG.repo}`, { headers: gh(t) }); const j = r.ok ? await r.json() : null; if (!j) throw 0;
       if (j.permissions && !j.permissions.push) { $('#stMsg').textContent = 'El token puede leer pero no escribir. Dale permiso Contents: Read and write.'; return; }
-      setToken(t); stDlg.close(); refresh(); toast('Conectado a GitHub');
+      setToken(t); $('#sDlg').close(); refresh(); toast('Conectado a GitHub');
     } catch { $('#stMsg').textContent = 'Ese token no abre el repo. Revisa que incluya el repo y el permiso Contents.'; }
   };
-  $('#clearToken').onclick = () => { setToken(''); stDlg.close(); refresh(); };
+  $('#clearToken').onclick = () => { setToken(''); $('#sDlg').close(); refresh(); };
+  $('#exportBtn').onclick = () => { const blob = new Blob([JSON.stringify({ meta: S.meta, clips: S.clips, catalog: S.catalog }, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'echo.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); };
 
-  // toast
+  // ---------- shared ----------
+  const closeDlg = d => { if (d.id === 'cDlg' && formVals() !== cfInit && !confirm('¿Descartar lo que escribiste?')) return; d.close(); };
+  document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => closeDlg(b.closest('dialog')));
+  $('#cDlg').addEventListener('cancel', e => { e.preventDefault(); closeDlg($('#cDlg')); });
+  $('#fab').onclick = () => openComposer();
   function toast(msg, undo) {
     const t = $('#toast'), b = t.querySelector('button');
     t.querySelector('span').textContent = msg; b.hidden = !undo;
     b.onclick = async () => { t.hidden = true; try { await undo(); } catch {} };
-    t.hidden = false; clearTimeout(toast.timer); toast.timer = setTimeout(() => t.hidden = true, 6000);
+    t.hidden = false; clearTimeout(toast.tm); toast.tm = setTimeout(() => t.hidden = true, 6000);
   }
 
-  // boot
   lsLoad(); render(); refresh();
 })();
 </script>

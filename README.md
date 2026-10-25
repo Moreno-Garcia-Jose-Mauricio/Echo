@@ -2,12 +2,12 @@
 
 The lines that keep echoing: favorite scenes from shows and movies.
 
-App personal para guardar escenas y frases de series y películas, con el minuto exacto, el episodio y un mapa visual de temporadas.
+App personal para guardar frases: de series y películas (con temporada, episodio y minuto) y de personas: científicos, profesores o propias.
 
 ## Cómo funciona
 
 - **App:** `index.html`, un solo archivo HTML, publicado con GitHub Pages.
-- **Datos:** `echo.json`, con todas las escenas (`clips`) y las temporadas de cada serie (`catalog`).
+- **Datos:** `echo.json`, con todas las frases (`clips`) y sus fuentes (`catalog`): series, películas y personas.
 - **Guardar:** cada escena que agregas, editas o eliminas desde la app es un commit a `echo.json` vía la API de GitHub.
 
 ## Configuración
@@ -49,3 +49,5 @@ El número de parche vive en `echo.json` (`meta.patch`) y se reinicia cuando sal
   "note": ""
 }
 ```
+
+Una frase de persona usa `"kind": "persona"`, `"show"` con el nombre, `"role"` (Científico, Profesor, Mía u Otra) y `"context"` (dónde o cuándo), sin temporada ni minuto.

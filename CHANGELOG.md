@@ -2,6 +2,13 @@
 
 Formato: **mayor.menor.parche**. Los parches (1.2.1, 1.2.2…) son frases guardadas desde la app y quedan en el historial de commits de `echo.json`.
 
+## v2.0
+- Rediseño completo en una sola pantalla: frase de bienvenida, buscador, filtros por tipo (Series, Películas, Personas) y fuentes en una tira deslizable.
+- Solo se muestran las temporadas y episodios que ya tienen frase; las escenas sin frase quedan en "Por completar".
+- Nuevo tipo de fuente **Persona**: científicos, profesores, frases propias u otras, con campo "Dónde o cuándo".
+- Una sola hoja para agregar: eliges tipo, fuente (o creas una nueva ahí mismo), episodio y frase.
+- Diálogos con varias líneas del mismo personaje se agrupan; etiqueta arriba de cada frase.
+
 ## v1.3
 - Frases largas: se muestran recortadas con "Ver completa" para no saturar la pantalla.
 - Diálogos entre personajes: las líneas con formato `Nombre: texto` se muestran como conversación, con cada personaje marcado.
