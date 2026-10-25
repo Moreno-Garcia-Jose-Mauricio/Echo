@@ -579,7 +579,7 @@
       "episode": null,
       "start": "",
       "end": "",
-      "quote": "",
+      "quote": "You have to show them that you're really notscared ooh)\nYou're playin\" with your life, this ain't no truth or dare (ooh)\nThey'll kick you, then they'll beat you, then they\"lltellyou it's fair\nSo beat it, but you wanna be bad\nJust beat it (beat it), beat it (beat it)",
       "label": "Beat It",
       "note": "",
       "character": "",
@@ -587,7 +587,7 @@
       "song": "Beat It",
       "year": "1982",
       "createdAt": 1792935687071,
-      "updatedAt": 1792935687071
+      "updatedAt": 1792936009889
     }
   ],
   "catalog": {
@@ -749,7 +749,7 @@
   },
   "meta": {
     "app": "2.4",
-    "patch": 3,
-    "updated": "2026-10-25T13:46:31.231Z"
+    "patch": 4,
+    "updated": "2026-10-25T13:46:50.495Z"
   }
 }
