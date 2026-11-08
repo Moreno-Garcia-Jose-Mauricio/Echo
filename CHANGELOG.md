@@ -2,6 +2,9 @@
 
 Formato: **mayor.menor.parche**. Los parches (1.2.1, 1.2.2…) son frases guardadas desde la app y quedan en el historial de commits de `echo.json`.
 
+## v2.5
+- El punto junto a la versión ahora es un indicador real de conexión: verde (conectado), ámbar parpadeando (guardando), rojo (sin conexión o token inválido) y gris (solo lectura).
+
 ## v2.4
 - Nuevo tipo **Canción**: artista, canción, año y minuto; filtro "Música" en el inicio.
 - Años de vida para personas y artistas, visibles junto a su rol.

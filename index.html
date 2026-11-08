@@ -222,7 +222,11 @@ body::before{background:var(--bg)}
 .logo{font-weight:800;letter-spacing:-0.06em}
 .logo span{color:var(--accent);text-shadow:0 0 14px rgba(244,183,64,.7)}
 .pill{background:transparent;border:1px solid var(--line);color:var(--accent);font:500 .74rem var(--mono);letter-spacing:.04em}
-.pill::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#FF4D4D;margin-right:6px;vertical-align:1px;box-shadow:0 0 8px #FF4D4D;animation:rec 2s infinite}
+.pill::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;vertical-align:0;--led:#7C828C;background:var(--led);box-shadow:0 0 8px var(--led)}
+.pill[data-st="ok"]::before{--led:#3DDC84}
+.pill[data-st="saving"]::before{--led:#F4B740;animation:rec 1s infinite}
+.pill[data-st="err"]::before{--led:#FF4D4D}
+.pill[data-st="ro"]::before{--led:#7C828C;box-shadow:none}
 @keyframes rec{50%{opacity:.25}}
 .iconbtn{background:var(--card);border:1px solid var(--line)}
 .hero{position:relative;margin:14px 0 6px;padding:34px 18px 22px;border-radius:4px;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);border-top:10px solid #000;border-bottom:10px solid #000;box-shadow:0 0 0 1px var(--line)}
@@ -374,8 +378,9 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
 
 <script>
 (() => {
-  const APP_VERSION = '2.4';
+  const APP_VERSION = '2.5';
   const CHANGELOG = [
+    ['2.5', 'El punto junto a la versión ahora indica la conexión: verde conectado, ámbar guardando, rojo sin conexión, gris solo lectura.'],
     ['2.4', 'Nuevo tipo Canción (artista, canción, año y minuto), filtro Música y años de vida para personas y artistas.'],
     ['2.3', 'Mapa completo de temporadas y episodios al final de cada serie: toca un cuadrito vacío para agregar su frase.'],
     ['2.2', 'Tema oscuro de cine: luz de proyector, grano de película, tipografía técnica y acentos ámbar.'],
@@ -388,7 +393,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   ];
   const ROLES = ['Científico', 'Profesor', 'Mía', 'Otra'];
   const $ = s => document.querySelector(s);
-  const S = { meta: null, clips: [], catalog: {}, type: 'all', source: null, season: null, q: '', pendOpen: false, syncMsg: '' };
+  const S = { conn: 'ro', meta: null, clips: [], catalog: {}, type: 'all', source: null, season: null, q: '', pendOpen: false, syncMsg: '' };
   const I = {
     search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
     gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>',
@@ -439,7 +444,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   async function commit(mutate, message) {
     const t = getToken();
     if (!t) { openSettings('Para guardar conecta tu token de GitHub.'); throw new Error('notoken'); }
-    setSync('Guardando en GitHub…');
+    setSync('Guardando en GitHub…'); setConn('saving');
     for (let i = 0; i < 3; i++) {
       const { data, sha } = await fetchRemote();
       data.clips ||= []; data.catalog ||= {};
@@ -449,20 +454,22 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
       const body = { message: `v${APP_VERSION}.${m.patch}: ${message}`, content: b64e(JSON.stringify(data, null, 2) + '\n'), branch: CFG.branch };
       if (sha) body.sha = sha;
       const r = await fetch(API, { method: 'PUT', headers: gh(t, { 'Content-Type': 'application/json' }), body: JSON.stringify(body) });
-      if (r.ok) { applyData(data); lsSave(); render(); setSync(`Guardado como v${versionStr()}`); setTimeout(() => S.syncMsg.startsWith('Guardado') && setSync(''), 4000); return; }
-      if (r.status === 401 || r.status === 403) { setSync('Tu token no tiene permiso para escribir. Revísalo en ajustes.'); throw new Error('token'); }
+      if (r.ok) { S.conn = 'ok'; applyData(data); lsSave(); render(); setSync(`Guardado como v${versionStr()}`); setTimeout(() => S.syncMsg.startsWith('Guardado') && setSync(''), 4000); return; }
+      if (r.status === 401 || r.status === 403) { setSync('Tu token no tiene permiso para escribir. Revísalo en ajustes.'); setConn('err'); throw new Error('token'); }
       if (r.status !== 409 && r.status !== 422) break;
     }
-    setSync('No se pudo guardar. Revisa tu conexión.'); throw new Error('save');
+    setSync('No se pudo guardar. Revisa tu conexión.'); setConn('err'); throw new Error('save');
   }
   const describe = c => `${c.show}${c.kind === 'serie' ? ` T${c.season}E${c.episode}` : c.kind === 'cancion' && c.song ? ` “${c.song}”` : ''}, ${c.label}`;
   const upsert = (d, c) => { const i = d.clips.findIndex(x => x.id === c.id); i >= 0 ? d.clips[i] = c : d.clips.push(c); };
   const removeClip = id => { const c = S.clips.find(x => x.id === id); return commit(d => { d.clips = d.clips.filter(x => x.id !== id); }, `Elimina frase: ${c ? describe(c) : id}`); };
   async function refresh() {
-    try { const { data } = await fetchRemote(); applyData(data); lsSave(); render(); setSync(getToken() ? '' : 'Solo lectura. Conecta tu token en ajustes para guardar.'); }
-    catch (e) { setSync(e.message === 'token' ? 'Tu token no funciona. Revísalo en ajustes.' : 'Sin conexión. Mostrando la última copia guardada.'); }
+    try { const { data } = await fetchRemote(); S.conn = getToken() ? 'ok' : 'ro'; applyData(data); lsSave(); render(); setSync(getToken() ? '' : 'Solo lectura. Conecta tu token en ajustes para guardar.'); }
+    catch (e) { setConn('err'); setSync(e.message === 'token' ? 'Tu token no funciona. Revísalo en ajustes.' : 'Sin conexión. Mostrando la última copia guardada.'); }
   }
   function versionStr() { const m = S.meta; return m && m.app === APP_VERSION && m.patch ? `${APP_VERSION}.${m.patch}` : APP_VERSION; }
+  function connLabel() { return { ok: 'conectado a GitHub', saving: 'guardando', err: 'sin conexión', ro: 'solo lectura' }[S.conn] || 'conectando'; }
+  function setConn(st) { S.conn = st; const p = $('#verBtn'); if (p) { p.dataset.st = st; p.title = connLabel(); p.setAttribute('aria-label', `Versión ${versionStr()}, ${connLabel()}`); } }
   function setSync(t) { S.syncMsg = t; const el = $('#sync'); if (el) el.textContent = t; }
 
   // ---------- model ----------
@@ -487,7 +494,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   function wireTop() {
     $('#gearBtn').onclick = () => openSettings(); $('#verBtn').onclick = () => openSettings();
   }
-  const topHTML = () => `<div class="top"><h1 class="logo">Echo<span>.</span></h1><button class="pill" id="verBtn" type="button" aria-label="Versión">v${esc(versionStr())}</button><button class="iconbtn" id="gearBtn" type="button" aria-label="Ajustes">${I.gear}</button></div>`;
+  const topHTML = () => `<div class="top"><h1 class="logo">Echo<span>.</span></h1><button class="pill" id="verBtn" type="button" data-st="${S.conn}" aria-label="Versión ${esc(versionStr())}, ${connLabel()}" title="${connLabel()}">v${esc(versionStr())}</button><button class="iconbtn" id="gearBtn" type="button" aria-label="Ajustes">${I.gear}</button></div>`;
 
   function groupsOf(src, q) {
     const cs = S.clips.filter(c => keyOf(c.show) === src.key && matchQ(c, q));
